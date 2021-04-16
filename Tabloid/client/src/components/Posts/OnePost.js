@@ -8,7 +8,7 @@ const OnePost = ({ post }) => {
     <Card className = "m-4">
         <CardHeader tag="h3">{post.title}</CardHeader>
         {post.imageLocation != null} 
-            <CardImg variant="top" src={post.imageLocation} />        
+            <CardImg src={post.imageLocation} alt="Card image"/>        
         
         <CardBody>
             <CardText>
