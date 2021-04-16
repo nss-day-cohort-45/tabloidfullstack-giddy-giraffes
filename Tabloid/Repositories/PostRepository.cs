@@ -19,7 +19,7 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                         SELECT p.Id, p.Title, p.Content, 
                                p.ImageLocation,
-                               p.CreateDateTime, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UserProfileId
+                               p.CreateDateTime, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UserProfileId,
 
                                c.Id, c.Name,
 
@@ -41,7 +41,7 @@ namespace Tabloid.Repositories
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Title = reader.GetString(reader.GetOrdinal("Title")),
                             Content = reader.GetString(reader.GetOrdinal("Content")),
-                            ImageLocation = DbUtils.GetNullableString(reader, "HeaderImage"),
+                            ImageLocation = DbUtils.GetNullableString(reader, "ImageLocation"),
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
                             CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
@@ -88,7 +88,7 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@CreateDateTime", post.CreateDateTime);
                     DbUtils.AddParameter(cmd, "@PublishDateTime", post.PublishDateTime);
                     DbUtils.AddParameter(cmd, "@IsApproved", post.IsApproved);
-                    DbUtils.AddParameter(cmd, "@CategoryName", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@CategoryId", post.CategoryId);
                     DbUtils.AddParameter(cmd, "@UserProfileId", post.UserProfileId);
 
                     post.Id = (int)cmd.ExecuteScalar();

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tabloid.Repositories;
+using Tabloid.Models;
+using System;
 
 namespace Tabloid.Controllers
 {
@@ -17,6 +19,14 @@ namespace Tabloid.Controllers
         public IActionResult Get()
         {
             return Ok(_postRepository.GetAll());
+        }
+
+        [HttpPost]
+        public IActionResult Post(Post post)
+        {
+            post.CreateDateTime = DateTime.Now;
+            _postRepository.Add(post);
+            return CreatedAtAction("Get", new { id = post.Id }, post);
         }
     }
 }
