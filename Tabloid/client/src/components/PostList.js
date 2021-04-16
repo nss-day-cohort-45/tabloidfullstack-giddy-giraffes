@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { PostContext } from "../../providers/PostProvider";
+import { PostContext } from "../providers/PostProvider";
 import Post from "./Post";
 
 const PostList = () => {
@@ -18,7 +18,7 @@ const PostList = () => {
   return (
     <section>
         {posts.map((p) => (
-        <Post key={post.id} post={p} />
+        <Post key={p.id} post={p} />
         ))}
     </section>
   );

@@ -8,6 +8,7 @@ import UserList from "./UserProfileList";
 import CategoryList from "./CategoryList";
 import TagList from "./TagList";
 import TagForm from "./TagForm";
+import PostList from "./PostList";
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -29,6 +30,10 @@ export default function ApplicationViews() {
 
         <Route path="/register">
           <Register />
+        </Route>
+
+        <Route path="/post">
+          <PostList />
         </Route>
 
         <Route path="/category" exact>
