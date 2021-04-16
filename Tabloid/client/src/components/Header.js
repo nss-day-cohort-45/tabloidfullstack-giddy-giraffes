@@ -55,6 +55,15 @@ export default function Header() {
               </NavItem>
             )}
           </Nav>
+          <Nav className="mr-auto" navbar>
+            {isLoggedIn && (
+              <NavItem>
+                <NavLink tag={RRNavLink} to="/category">
+                  Categories
+                </NavLink>
+              </NavItem>
+            )}
+          </Nav>
           <Nav navbar>
             {isLoggedIn && (
               <>
@@ -71,6 +80,7 @@ export default function Header() {
 
               </>
             )}
+
             {!isLoggedIn && (
               <>
                 <NavItem>

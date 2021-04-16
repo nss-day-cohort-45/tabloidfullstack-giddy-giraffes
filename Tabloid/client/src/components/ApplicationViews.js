@@ -4,8 +4,8 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-
 import UserList from "./UserProfileList";
+import CategoryList from "./CategoryList";
 import TagList from "./TagList";
 import TagForm from "./TagForm";
 
@@ -31,6 +31,11 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
+        <Route path="/category" exact>
+          {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
+        </Route>
+
+
         <Route path="/tag" exact>
           {isLoggedIn ? <TagList /> : <Redirect to="/login" />}
         </Route>
@@ -38,6 +43,7 @@ export default function ApplicationViews() {
         <Route path="/tag/add" exact>
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
+
       </Switch>
     </main>
   );
