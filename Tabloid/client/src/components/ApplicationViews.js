@@ -4,6 +4,7 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+import UserList from "./UserProfileList";
 import CategoryList from "./CategoryList";
 import TagList from "./TagList";
 import TagForm from "./TagForm";
@@ -20,6 +21,10 @@ export default function ApplicationViews() {
 
         <Route path="/login">
           <Login />
+        </Route>
+
+        <Route path="/userprofile">
+          <UserList />
         </Route>
 
         <Route path="/register">
