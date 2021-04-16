@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
 using Tabloid.Utils;
@@ -28,7 +29,12 @@ namespace Tabloid.Repositories
 
                           FROM Post p
                           LEFT JOIN Category c ON p.CategoryId = c.Id
-                          LEFT JOIN UserProfile up ON p.UserProfileId = up.Id";
+                          LEFT JOIN UserProfile up ON p.UserProfileId = up.Id
+                          WHERE p.IsApproved = 1
+                          AND p.PublishDateTime < @currentDate
+                          ORDER BY p.PublishDateTime DESC";
+
+                    DbUtils.AddParameter(cmd, "@currentDate", DateTime.Now);
 
                     var reader = cmd.ExecuteReader();
 
