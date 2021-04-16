@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { UserProfileContext } from "../../providers/UserProfileProvider"
 import { useParams, useHistory } from "react-router-dom"
 
-export const UserDetail = () => {
+const UserDetail = () => {
     const { getUserById } = useContext(UserProfileContext)
 
     const [user, setUser] = useState({})
@@ -31,4 +31,5 @@ export const UserDetail = () => {
 
         </section>
     )
-}
+};
+export default UserDetail;
