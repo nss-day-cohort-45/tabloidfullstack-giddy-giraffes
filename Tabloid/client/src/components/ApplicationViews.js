@@ -6,6 +6,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import UserList from "./UserProfileList";
 import CategoryList from "./CategoryList";
+import CategoryForm from "./CategoryForm";
 import TagList from "./TagList";
 import TagForm from "./TagForm";
 
@@ -33,6 +34,10 @@ export default function ApplicationViews() {
 
         <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/category/add" exact>
+          {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
 
 
