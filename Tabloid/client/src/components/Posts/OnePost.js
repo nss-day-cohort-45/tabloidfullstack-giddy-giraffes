@@ -1,21 +1,25 @@
 import React from "react";
 import { Card, CardBody, CardHeader, CardText, CardImg} from "reactstrap";
 
-const Post = ({ post }) => {
+const OnePost = ({ post }) => {
+    let date = new Date (post.publishDateTime);
+
   return (
     <Card className = "m-4">
-        <CardHeader>{post.title}</CardHeader>
-        {post.imageLocation != null(
-            <CardImg>
-                {post.imageLocation}
-            </CardImg>
-        )};
+        <CardHeader tag="h3">{post.title}</CardHeader>
+        {post.imageLocation != null} 
+            <CardImg variant="top" src={post.imageLocation} />        
+        
         <CardBody>
             <CardText>
                 {post.content}
+            </CardText>
+            <CardText>
                 <small>
-                    Publication Date: {post.publishedDateTime}
+                    Published: {date.toLocaleDateString('en-US')}
                 </small>
+            </CardText>
+            <CardText>
                 <small>
                     By: {post.userProfile.displayName}           
                 </small>
@@ -25,4 +29,4 @@ const Post = ({ post }) => {
   );
 };
 
-export default Post;
+export default OnePost;

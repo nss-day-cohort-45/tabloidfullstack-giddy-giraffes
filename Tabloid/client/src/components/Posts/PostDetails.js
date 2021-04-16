@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { PostContext } from "../../providers/PostProvider";
 import { useParams } from "react-router-dom";
-import OnePost from "./Post";
+import OnePost from "./OnePost";
 
 const PostDetails = () => {
   const [post, setPost] = useState();
