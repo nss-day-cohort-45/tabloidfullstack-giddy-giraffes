@@ -7,6 +7,7 @@ export const UserProfileContext = createContext();
 
 export function UserProfileProvider(props) {
   const apiUrl = "/api/userprofile";
+  const [users, setUsers] = useState([]);
 
   const userProfile = sessionStorage.getItem("userProfile");
   const [isLoggedIn, setIsLoggedIn] = useState(userProfile != null);
@@ -78,9 +79,23 @@ export function UserProfileProvider(props) {
     );
   };
 
+  const getAllUsers = () => {
+    return fetch(apiUrl)
+      .then((res) => res.json())
+      .then(setUsers);
+  };
+
   return (
     <UserProfileContext.Provider
-      value={{ isLoggedIn, login, logout, register, getToken }}
+      value={{
+        isLoggedIn,
+        users,
+        login,
+        logout,
+        register,
+        getToken,
+        getAllUsers,
+      }}
     >
       {isFirebaseReady ? (
         props.children

@@ -25,13 +25,25 @@ export default function Header() {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
+
             {/* When isLoggedIn === true, we will render the Home link */}
             {isLoggedIn && (
-              <NavItem>
-                <NavLink tag={RRNavLink} to="/">
-                  Home
+              <>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/">
+                    Home
                 </NavLink>
-              </NavItem>
+                </NavItem>
+              </>
+            )}
+
+            {isLoggedIn && (
+              <>
+                <NavItem>
+                  <NavLink tag={RRNavLink} to="/userprofile">User List</NavLink>
+                </NavItem>
+              </>
+
             )}
           </Nav>
           <Nav className="mr-auto" navbar>
@@ -39,6 +51,15 @@ export default function Header() {
               <NavItem>
                 <NavLink tag={RRNavLink} to="/tag">
                   Tags
+                </NavLink>
+              </NavItem>
+            )}
+          </Nav>
+          <Nav className="mr-auto" navbar>
+            {isLoggedIn && (
+              <NavItem>
+                <NavLink tag={RRNavLink} to="/category">
+                  Categories
                 </NavLink>
               </NavItem>
             )}
@@ -56,8 +77,10 @@ export default function Header() {
                     Logout
                   </a>
                 </NavItem>
+
               </>
             )}
+
             {!isLoggedIn && (
               <>
                 <NavItem>
@@ -74,7 +97,7 @@ export default function Header() {
             )}
           </Nav>
         </Collapse>
-      </Navbar>
-    </div>
+      </Navbar >
+    </div >
   );
 }

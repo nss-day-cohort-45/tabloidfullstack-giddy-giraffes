@@ -3,9 +3,8 @@ using Tabloid.Models;
 
 namespace Tabloid.Repositories
 {
-    public interface IPostRepository
+    public interface ICategoryRepository
     {
-        void Add(Post post);
-        List<Post> GetAll();
+        List<Category> GetAllCategories();
     }
 }
