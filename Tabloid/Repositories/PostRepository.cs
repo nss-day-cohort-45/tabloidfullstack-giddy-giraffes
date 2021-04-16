@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
 using Tabloid.Utils;
@@ -28,7 +29,12 @@ namespace Tabloid.Repositories
 
                           FROM Post p
                           LEFT JOIN Category c ON p.CategoryId = c.Id
-                          LEFT JOIN UserProfile up ON p.UserProfileId = up.Id";
+                          LEFT JOIN UserProfile up ON p.UserProfileId = up.Id
+                          WHERE p.IsApproved = 1
+                          AND p.PublishDateTime < @currentDate
+                          ORDER BY p.PublishDateTime DESC";
+
+                    DbUtils.AddParameter(cmd, "@currentDate", DateTime.Now);
 
                     var reader = cmd.ExecuteReader();
 
@@ -44,6 +50,7 @@ namespace Tabloid.Repositories
                             ImageLocation = DbUtils.GetNullableString(reader, "ImageLocation"),
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                            IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
                             CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
                             Category = new Category()
                             {
@@ -66,6 +73,69 @@ namespace Tabloid.Repositories
                     reader.Close();
 
                     return posts;
+                }
+            }
+        }
+
+        public Post GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT p.Id, p.Title, p.Content, 
+                               p.ImageLocation,
+                               p.CreateDateTime, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UserProfileId,
+
+                               c.Name,
+
+                               up.DisplayName, up.FirstName,
+                               up.LastName, up.Email, up.ImageLocation
+
+                          FROM Post p
+                          LEFT JOIN Category c ON p.CategoryId = c.Id
+                          LEFT JOIN UserProfile up ON p.UserProfileId = up.Id
+                          WHERE p.Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Post post = null;
+
+                    if (reader.Read())
+                    {
+                        post = new Post()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Title = reader.GetString(reader.GetOrdinal("Title")),
+                            Content = reader.GetString(reader.GetOrdinal("Content")),
+                            ImageLocation = DbUtils.GetNullableString(reader, "ImageLocation"),
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                            IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                            CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                            Category = new Category()
+                            {
+                                Id = DbUtils.GetInt(reader, "CategoryId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                            },
+                            UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            }
+                        };
+                    }
+                    reader.Close();
+                    return post;
                 }
             }
         }
