@@ -46,7 +46,42 @@ namespace Tabloid.Repositories
             }
         }
 
-     
+        public Tag GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                          SELECT [Name]
+                            FROM Tag
+                           WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    Tag tag = null;
+                    if (reader.Read())
+                    {
+                        tag = new Tag()
+                        {
+                            Id = id,
+                            Name = DbUtils.GetString(reader, "Name"),
+                           
+                        };
+                    }
+
+                    reader.Close();
+
+                    return tag;
+                }
+            }
+        }
+
+
+
 
         public void Add(Tag tag)
         {
@@ -89,7 +124,7 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                         UPDATE Tag
-                           SET [Name] = @Name,
+                           SET [Name] = @Name
                          WHERE Id = @Id";
 
                     DbUtils.AddParameter(cmd, "@Name", tag.Name);

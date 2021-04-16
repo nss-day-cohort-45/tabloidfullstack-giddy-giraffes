@@ -12,6 +12,10 @@ export const TagProvider = (props) => {
       .then(setTags);
   };
 
+  const getTagById = (id) => {
+    return fetch(`/api/tag/${id}`).then((res) => res.json());
+  };
+
   const addTag = (tag) => {
     return fetch("/api/tag", {
       method: "POST",
@@ -28,8 +32,20 @@ export const TagProvider = (props) => {
     }).then(getAllTags);
   };
 
+  const updateTag = (tag) => {
+    return fetch(`/api/tag/${tag.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(tag),
+    });
+  };
+
   return (
-    <TagContext.Provider value={{ tags, getAllTags, addTag, deleteTag }}>
+    <TagContext.Provider
+      value={{ tags, getAllTags, addTag, deleteTag, updateTag, getTagById }}
+    >
       {props.children}
     </TagContext.Provider>
   );
