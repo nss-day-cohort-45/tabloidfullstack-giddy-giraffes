@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
-import { PostContext } from "./PostProvider"
+import { PostContext } from "../../providers/PostProvider.js";
 
 export const PostForm = () => {
     const { addPost, getAllPosts } = useContext(PostContext)
