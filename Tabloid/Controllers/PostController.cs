@@ -21,6 +21,12 @@ namespace Tabloid.Controllers
             return Ok(_postRepository.GetAll());
         }
 
+        [HttpGet("{postId}")]
+        public IActionResult GetUserProfile(int postId)
+        {
+            return Ok(_postRepository.GetById(postId));
+        }
+
         [HttpPost]
         public IActionResult Post(Post post)
         {
