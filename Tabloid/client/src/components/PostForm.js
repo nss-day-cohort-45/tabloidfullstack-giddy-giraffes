@@ -132,14 +132,6 @@ export const PostForm = () => {
                     </div>
                 </fieldset>
 
-                <fieldset>
-                    <div className="form-group">
-                        <label htmlFor="userProfileId">User Profile: </label>
-                        <input type="text" id="userProfileId" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="User profile" value={post.userProfileId} />
-                    </div>
-                </fieldset>
-
-
                 <button className="btn btn-primary"
                     disabled={isLoading}
                     onClick={event => {
