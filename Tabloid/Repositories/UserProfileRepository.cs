@@ -140,9 +140,14 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT u.id,  u.Email
+                       SELECT u.id,  u.Email,
+                            u.FirstName, u.LastName, u.DisplayName,
+                              u.CreateDateTime, u.ImageLocation, u.UserTypeId,
+                              ut.[Name] AS UserTypeName
+        
+
                          FROM UserProfile u
-                             
+                              LEFT JOIN UserType ut ON u.UserTypeId = ut.id
                         WHERE u.Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -153,8 +158,19 @@ namespace Tabloid.Repositories
                     {
                         userProfile = new UserProfile()
                         {
+                            FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
+                            LastName = reader.GetString(reader.GetOrdinal("LastName")),
                             Id = DbUtils.GetInt(reader, "Id"),
                             Email = DbUtils.GetString(reader, "Email"),
+                            DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")),
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                                ImageLocation = DbUtils.GetNullableString(reader, "ImageLocation"),
+                            UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                            UserType = new UserType()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                                Name = reader.GetString(reader.GetOrdinal("UserTypeName"))
+                            },
                           
                         };
                     }
@@ -181,12 +197,9 @@ namespace Tabloid.Repositories
         }
 
 
-        u.FirstName, u.LastName, u.DisplayName,
-                              u.CreateDateTime, u.ImageLocation, u.UserTypeId,
-                              ut.[Name] AS UserTypeName
+
         
 
-         LEFT JOIN UserType ut ON u.UserTypeId = ut.id
 
           FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                             LastName = reader.GetString(reader.GetOrdinal("LastName")),
