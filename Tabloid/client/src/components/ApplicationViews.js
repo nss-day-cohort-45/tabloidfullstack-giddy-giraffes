@@ -4,11 +4,11 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-import UserList from "./UserProfileList";
+import UserList from "././Users/UserProfileList";
 import CategoryList from "./CategoryList";
 import TagList from "./TagList";
 import TagForm from "./TagForm";
-import UserDetail from "./Users/UserDetails"
+import UserDetail from "././Users/UserDetails"
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -24,7 +24,7 @@ export default function ApplicationViews() {
           <Login />
         </Route>
 
-        <Route path="/userprofile">
+        <Route path="/userprofile" exact>
           <UserList />
         </Route>
 
@@ -35,7 +35,7 @@ export default function ApplicationViews() {
         <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
-        <Route exact path="/userprofile/detail/:userId(\d+)">
+        <Route exact path="/userprofile/user:userId(\d+)">
           <UserDetail />
         </Route>
 

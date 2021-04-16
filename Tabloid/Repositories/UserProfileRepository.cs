@@ -140,7 +140,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT u.id,  u.Email, 
+                       SELECT u.id,  u.Email
                          FROM UserProfile u
                              
                         WHERE u.Id = @id";
