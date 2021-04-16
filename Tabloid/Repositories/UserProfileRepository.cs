@@ -145,7 +145,7 @@ namespace Tabloid.Repositories
                               ut.[Name] AS UserTypeName
                          FROM UserProfile u
                               LEFT JOIN UserType ut ON u.UserTypeId = ut.id
-                        WHERE u.id = @id";
+                        WHERE u.Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     UserProfile userProfile = null;

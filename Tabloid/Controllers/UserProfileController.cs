@@ -33,7 +33,7 @@ namespace Tabloid.Controllers
             return Ok(profiles);
         }
         [HttpGet("{id}")]
-        public ActionResult Details(int id)
+        public ActionResult GetUserProfileById (int id)
         {
             UserProfile profile = _userProfileRepository.GetUserProfileById(id);
 

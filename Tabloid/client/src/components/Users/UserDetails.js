@@ -5,7 +5,7 @@ import { useParams, useHistory } from "react-router-dom"
 export const UserDetail = () => {
     const { getUserById } = useContext(UserProfileContext)
 
-    const [user, setUsers] = useState({})
+    const [user, setUser] = useState({})
 
     const { userId } = useParams();
     // how youre accesing the id you are telling application view to go get
@@ -14,7 +14,7 @@ export const UserDetail = () => {
         console.log("useEffect", userId)
         getUserById(userId)
             .then((response) => {
-                setUsers(response)
+                setUser(response)
             })
     }, [])
 
