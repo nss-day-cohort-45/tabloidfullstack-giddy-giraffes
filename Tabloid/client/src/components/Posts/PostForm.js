@@ -67,10 +67,6 @@ export const PostForm = () => {
             window.alert("Please select a category")
         }
 
-        else if (userProfileId === 0 || userProfileId === NaN) {
-            window.alert("Please select a user")
-        }
-
         else {
             //disable the button - no extra clicks
             setIsLoading(true); //this ensures the user cannot repeatedly click the button while the API is being updated
@@ -86,7 +82,7 @@ export const PostForm = () => {
                 userProfileId: parseInt(post.userProfileId),
                 dateCreated: Date.now
             })
-                .then(() => setIsLoading(false))
+                .then(() => setIsLoading(true))
                 .then(getAllPosts)
         }
     }
@@ -129,6 +125,13 @@ export const PostForm = () => {
                     <div className="form-group">
                         <label htmlFor="categoryId">Category: </label>
                         <input type="text" id="categoryId" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Category" value={post.categoryId} />
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div className="form-group">
+                        <label htmlFor="userProfileId">User: </label>
+                        <input type="text" id="userProfileId" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="User" value={post.userProfileId} />
                     </div>
                 </fieldset>
 
