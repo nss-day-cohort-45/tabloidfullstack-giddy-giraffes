@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using Tabloid.Models;
 using Tabloid.Utils;
 
@@ -18,10 +18,17 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT p.Id, p.Title, p.Content, 
-                               p.ImageLocation AS HeaderImage,
-                               p.CreateDateTime, p.PublishDateTime, p.IsApproved,
-                               p.CategoryId, p.UserProfileId
-                          FROM Post p";
+                               p.ImageLocation,
+                               p.CreateDateTime, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UserProfileId
+
+                               c.Id, c.Name,
+
+                               up.Id, up.DisplayName, up.FirstName,
+                               up.LastName, up.Email, up.ImageLocation
+
+                          FROM Post p
+                          LEFT JOIN Category c ON p.CategoryId = c.Id
+                          LEFT JOIN UserProfile up ON p.UserProfileId = up.Id";
 
                     var reader = cmd.ExecuteReader();
 
@@ -38,7 +45,21 @@ namespace Tabloid.Repositories
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
                             CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
-                            UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId"))
+                            Category = new Category()
+                            {
+                                Id = DbUtils.GetInt(reader, "CategoryId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                            },
+                            UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            },
                         };
                         posts.Add(post);
                     }
@@ -67,7 +88,7 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@CreateDateTime", post.CreateDateTime);
                     DbUtils.AddParameter(cmd, "@PublishDateTime", post.PublishDateTime);
                     DbUtils.AddParameter(cmd, "@IsApproved", post.IsApproved);
-                    DbUtils.AddParameter(cmd, "@CategoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@CategoryName", post.CategoryId);
                     DbUtils.AddParameter(cmd, "@UserProfileId", post.UserProfileId);
 
                     post.Id = (int)cmd.ExecuteScalar();
