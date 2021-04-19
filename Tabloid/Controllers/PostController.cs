@@ -2,6 +2,7 @@
 using Tabloid.Repositories;
 using Tabloid.Models;
 using System;
+using System.Security.Claims;
 
 namespace Tabloid.Controllers
 {
@@ -25,6 +26,12 @@ namespace Tabloid.Controllers
         public IActionResult GetUserProfile(int postId)
         {
             return Ok(_postRepository.GetById(postId));
+        }
+
+        [HttpGet("user-posts/{userId}")]
+        public IActionResult MyPosts(int userId)
+        {
+            return Ok(_postRepository.GetPostsByUser(userId));
         }
 
         [HttpPost]
