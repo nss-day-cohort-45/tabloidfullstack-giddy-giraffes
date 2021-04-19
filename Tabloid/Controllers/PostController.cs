@@ -2,7 +2,6 @@
 using Tabloid.Repositories;
 using Tabloid.Models;
 using System;
-using System.Security.Claims;
 
 namespace Tabloid.Controllers
 {
