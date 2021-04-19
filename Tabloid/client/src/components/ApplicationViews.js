@@ -39,8 +39,11 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
+        <Route path="/post/add" exact>
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/post" exact>
-          <PostForm />
           {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
 
