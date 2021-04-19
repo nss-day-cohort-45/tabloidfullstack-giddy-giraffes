@@ -104,6 +104,7 @@ export function UserProfileProvider(props) {
         register,
         getToken,
         getAllUsers,
+        getUserById
       }}
     >
       {isFirebaseReady ? (
@@ -111,7 +112,6 @@ export function UserProfileProvider(props) {
       ) : (
         <Spinner className="app-spinner dark" />
       )}
-
     </UserProfileContext.Provider>
   );
 }
