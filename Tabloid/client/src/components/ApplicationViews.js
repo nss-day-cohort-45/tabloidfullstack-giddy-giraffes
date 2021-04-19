@@ -8,13 +8,8 @@ import UserList from "././Users/UserProfileList";
 import CategoryList from "./CategoryList";
 import CategoryForm from "./CategoryForm";
 import TagList from "./TagList";
-<<<<<<< HEAD
-import TagForm from "./TagForm";
-import UserDetail from "././Users/UserDetails"
-=======
 import { TagForm } from "./TagForm";
-
->>>>>>> 080a98db5e0404aabb1d12063bdbac9353c42959
+import UserDetail from "./Users/UserDetails"
 import PostList from "./Posts/PostList";
 import PostDetails from "./Posts/PostDetails";
 
