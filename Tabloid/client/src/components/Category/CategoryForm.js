@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { CategoryContext } from "../providers/CategoryProvider";
+import { CategoryContext } from "../../providers/CategoryProvider";
 
 export default function CategoryAddForm() {
     const history = useHistory();
