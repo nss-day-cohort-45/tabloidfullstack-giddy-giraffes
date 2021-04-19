@@ -4,15 +4,11 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-<<<<<<< HEAD
-import UserList from "./UserProfileList";
+
+import UserList from "././Users/UserProfileList";
 import CategoryList from "./Category/CategoryList";
 import CategoryForm from "./Category/CategoryForm";
-=======
-import UserList from "././Users/UserProfileList";
-import CategoryList from "./CategoryList";
-import CategoryForm from "./CategoryForm";
->>>>>>> 6c97c79142759359e232325214dace0c0a9b7b38
+
 import TagList from "./TagList";
 import { TagForm } from "./TagForm";
 import UserDetail from "./Users/UserDetails"
