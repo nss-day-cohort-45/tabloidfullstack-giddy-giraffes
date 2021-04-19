@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { useHistory, useParams } from 'react-router-dom';
 import { PostContext } from "../../providers/PostProvider.js";
 
 export const PostForm = () => {
@@ -18,6 +19,9 @@ export const PostForm = () => {
 
     //wait for data before button is active
     const [isLoading, setIsLoading] = useState(false);
+
+    const { postId } = useParams();
+    const history = useHistory();
 
     //when a field changes, update state. The return will re-render and display based on the values in state
     //Controlled component
@@ -79,11 +83,10 @@ export const PostForm = () => {
                 publishDateTime: post.publishDateTime,
                 isApproved: true,
                 categoryId: post.categoryId,
-                userProfileId: parseInt(post.userProfileId),
+                userProfileId: parseInt(post.userProfileId), // come back to this
                 dateCreated: Date.now
             })
-                .then(() => setIsLoading(true))
-                .then(getAllPosts)
+                .then((post) => history.push(`/post/${post.id}`))
         }
     }
 
