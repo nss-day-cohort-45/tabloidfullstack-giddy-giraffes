@@ -86,6 +86,9 @@ export const PostForm = () => {
                 userProfileId: parseInt(post.userProfileId), // come back to this
                 dateCreated: Date.now
             })
+                //after we add the new post object, we then pass that new post object to our .then() function
+                //then we grab the id of the new post
+                //and we push the id of the new post object to our url
                 .then((post) => history.push(`/post/${post.id}`))
         }
     }

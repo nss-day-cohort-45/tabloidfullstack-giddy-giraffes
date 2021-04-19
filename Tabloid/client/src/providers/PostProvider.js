@@ -23,9 +23,9 @@ export const PostProvider = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(post),
+      body: JSON.stringify(post), //this stringifies our post object meaning it changes our object into string object
     })
-      .then(res => res.json())
+      .then(res => res.json()) //then send the stringified object(res) to the json server, and we will use this in our PostForm after we add new object
   };
 
   return (
