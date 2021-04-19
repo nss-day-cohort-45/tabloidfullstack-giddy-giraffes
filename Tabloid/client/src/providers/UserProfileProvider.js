@@ -89,7 +89,9 @@ export function UserProfileProvider(props) {
     return fetch(`${apiUrl}/user${id}`)
       .then((res) => res.json())
 
+
   };
+
 
 
   return (
