@@ -4,9 +4,11 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
+
 import UserList from "././Users/UserProfileList";
-import CategoryList from "./CategoryList";
-import CategoryForm from "./CategoryForm";
+import CategoryList from "./Category/CategoryList";
+import CategoryForm from "./Category/CategoryForm";
+
 import TagList from "./TagList";
 import { TagForm } from "./TagForm";
 import UserDetail from "./Users/UserDetails"
