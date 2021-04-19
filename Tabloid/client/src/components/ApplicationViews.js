@@ -4,12 +4,14 @@ import { UserProfileContext } from "../providers/UserProfileProvider";
 import Login from "./Login";
 import Register from "./Register";
 import Hello from "./Hello";
-import UserList from "./UserProfileList";
-import CategoryList from "./CategoryList";
-import CategoryForm from "./CategoryForm";
+
+import UserList from "././Users/UserProfileList";
+import CategoryList from "./Category/CategoryList";
+import CategoryForm from "./Category/CategoryForm";
+
 import TagList from "./TagList";
 import { TagForm } from "./TagForm";
-
+import UserDetail from "./Users/UserDetails"
 import PostList from "./Posts/PostList";
 import PostDetails from "./Posts/PostDetails";
 
@@ -27,7 +29,7 @@ export default function ApplicationViews() {
           <Login />
         </Route>
 
-        <Route path="/userprofile">
+        <Route path="/userprofile" exact>
           <UserList />
         </Route>
 
@@ -45,6 +47,9 @@ export default function ApplicationViews() {
 
         <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/userprofile/user:userId(\d+)">
+          <UserDetail />
         </Route>
 
         <Route path="/category/add" exact>

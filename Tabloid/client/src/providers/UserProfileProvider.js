@@ -84,6 +84,15 @@ export function UserProfileProvider(props) {
       .then((res) => res.json())
       .then(setUsers);
   };
+  const getUserById = (id) => {
+    debugger
+    return fetch(`${apiUrl}/user${id}`)
+      .then((res) => res.json())
+
+
+  };
+
+
 
   return (
     <UserProfileContext.Provider
@@ -95,6 +104,7 @@ export function UserProfileProvider(props) {
         register,
         getToken,
         getAllUsers,
+        getUserById
       }}
     >
       {isFirebaseReady ? (
