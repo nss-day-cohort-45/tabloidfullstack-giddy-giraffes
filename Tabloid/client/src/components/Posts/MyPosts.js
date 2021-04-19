@@ -6,8 +6,7 @@ const MyPosts = () => {
   const { posts, getPostsByUser } = useContext(PostContext);
 
   useEffect(() => {
-    let user = JSON.parse(sessionStorage.userProfile);
-    getPostsByUser(user.id);
+    getPostsByUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
