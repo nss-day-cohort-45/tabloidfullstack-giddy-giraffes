@@ -103,6 +103,7 @@ namespace Tabloid.Utils
         {
             return reader.IsDBNull(reader.GetOrdinal(column));
         }
+        
 
         /// <summary>
         ///  Determine if the value a given column is not NULL
