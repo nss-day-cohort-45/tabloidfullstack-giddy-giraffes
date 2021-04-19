@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Tabloid.Models;
 using Tabloid.Repositories;
-using System.Security.Claims;
+using Tabloid.Models;
+using System;
 
 namespace Tabloid.Controllers
 {
@@ -23,6 +19,20 @@ namespace Tabloid.Controllers
         public IActionResult Get()
         {
             return Ok(_postRepository.GetAll());
+        }
+
+        [HttpGet("{postId}")]
+        public IActionResult GetUserProfile(int postId)
+        {
+            return Ok(_postRepository.GetById(postId));
+        }
+
+        [HttpPost]
+        public IActionResult Post(Post post)
+        {
+            post.CreateDateTime = DateTime.Now;
+            _postRepository.Add(post);
+            return CreatedAtAction("Get", new { id = post.Id }, post);
         }
     }
 }
