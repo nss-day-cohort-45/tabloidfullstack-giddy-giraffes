@@ -20,7 +20,9 @@ export function UserProfileProvider(props) {
   }, []);
 
   const login = (email, pw) => {
-    return firebase.auth().signInWithEmailAndPassword(email, pw)
+    return firebase
+      .auth()
+      .signInWithEmailAndPassword(email, pw)
       .then((signInResponse) => getUserProfile(signInResponse.user.uid))
       .then((userProfile) => {
         sessionStorage.setItem("userProfile", JSON.stringify(userProfile));
@@ -29,18 +31,24 @@ export function UserProfileProvider(props) {
   };
 
   const logout = () => {
-    return firebase.auth().signOut()
+    return firebase
+      .auth()
+      .signOut()
       .then(() => {
-        sessionStorage.clear()
+        sessionStorage.clear();
         setIsLoggedIn(false);
       });
   };
 
   const register = (userProfile, password) => {
-    return firebase.auth().createUserWithEmailAndPassword(userProfile.email, password)
-      .then((createResponse) => saveUser({ ...userProfile, firebaseUserId: createResponse.user.uid }))
+    return firebase
+      .auth()
+      .createUserWithEmailAndPassword(userProfile.email, password)
+      .then((createResponse) =>
+        saveUser({ ...userProfile, firebaseUserId: createResponse.user.uid })
+      )
       .then((savedUserProfile) => {
-        sessionStorage.setItem("userProfile", JSON.stringify(savedUserProfile))
+        sessionStorage.setItem("userProfile", JSON.stringify(savedUserProfile));
         setIsLoggedIn(true);
       });
   };
@@ -52,9 +60,10 @@ export function UserProfileProvider(props) {
       fetch(`${apiUrl}/${firebaseUserId}`, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }).then(resp => resp.json()));
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((resp) => resp.json())
+    );
   };
 
   const saveUser = (userProfile) => {
@@ -63,10 +72,11 @@ export function UserProfileProvider(props) {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(userProfile)
-      }).then(resp => resp.json()));
+        body: JSON.stringify(userProfile),
+      }).then((resp) => resp.json())
+    );
   };
 
   const getAllUsers = () => {
@@ -79,13 +89,29 @@ export function UserProfileProvider(props) {
     return fetch(`${apiUrl}/user${id}`)
       .then((res) => res.json())
 
+
   };
 
+
+
   return (
-    <UserProfileContext.Provider value={{ isLoggedIn, users, login, logout, getUserById, register, getToken, getAllUsers }}>
-      {isFirebaseReady
-        ? props.children
-        : <Spinner className="app-spinner dark" />}
+    <UserProfileContext.Provider
+      value={{
+        isLoggedIn,
+        users,
+        login,
+        logout,
+        register,
+        getToken,
+        getAllUsers,
+      }}
+    >
+      {isFirebaseReady ? (
+        props.children
+      ) : (
+        <Spinner className="app-spinner dark" />
+      )}
+
     </UserProfileContext.Provider>
   );
 }
