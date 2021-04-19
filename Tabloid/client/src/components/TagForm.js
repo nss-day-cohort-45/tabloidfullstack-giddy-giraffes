@@ -1,36 +1,111 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { TagContext } from "../providers/TagProvider";
 
-export default function TagAddForm() {
+import { useHistory, useParams } from "react-router-dom";
+
+export const TagForm = () => {
+  const { addTag, getTagById, updateTag, getAllTags } = useContext(TagContext);
+
+  const [tag, setTag] = useState({
+    Name: "",
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+
   const history = useHistory();
-  const { addTag } = useContext(TagContext);
-  const [Name, setName] = useState("");
+  const { tagId } = useParams();
 
-  const Save = (e) => {
-    const tag = {
-      Name,
-    };
+  const handleControlledInputChange = (event) => {
+    const newTag = { ...tag };
+    let selectedVal = event.target.value;
+    if (event.target.id.includes("Id")) {
+      selectedVal = parseInt(selectedVal);
+    }
 
-    addTag(tag).then((t) => {
-      history.push("/tag");
-    });
+    newTag[event.target.id] = selectedVal;
+
+    setTag(newTag);
   };
 
+  const handleClickSaveTag = () => {
+    if (tag.name === "") {
+      window.alert("Please enter a name");
+    } else {
+      setIsLoading(true);
+
+      if (tagId) {
+        updateTag({
+          id: tagId,
+          Name: tag.Name,
+        }).then(() => history.push(`/tag`));
+      } else {
+        addTag({
+          Name: tag.Name,
+        }).then(() => history.push(`/tag`));
+      }
+    }
+  };
+
+  useEffect(() => {
+    getAllTags().then(() => {
+      if (tagId) {
+        getTagById(tagId).then((t) => {
+          setTag(t);
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(false);
+      }
+    });
+  }, []);
+
   return (
-    <Form>
-      <FormGroup>
-        <Label for="tagText">Tag</Label>
-        <Input
-          id="tagText"
-          type="text"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Button onClick={Save}>Save</Button>
-      </FormGroup>
-    </Form>
+    <form className="tagForm">
+      <h2 className="tagForm__title">{tagId ? "Save Tag" : "Add Tag"}</h2>
+
+      <Button
+        variant
+        className="back_button"
+        onClick={() => {
+          history.goBack();
+        }}
+      >
+        Back
+      </Button>
+
+      <div className="form_background">
+        <fieldset>
+          <div className="form-group">
+            <label htmlFor="Name">Tag name:</label>
+            <input
+              type="text"
+              id="Name"
+              onChange={handleControlledInputChange}
+              required
+              autoFocus
+              className="form-control"
+              placeholder="Tag name"
+              value={tag.Name}
+            />
+          </div>
+        </fieldset>
+
+        <Button
+          variant="secondary"
+          style={{
+            color: "black",
+          }}
+          className="add_button"
+          disabled={isLoading}
+          onClick={(event) => {
+            event.preventDefault();
+            handleClickSaveTag();
+          }}
+        >
+          {tagId ? "Save Tag" : "Add Tag"}
+        </Button>
+      </div>
+    </form>
   );
-}
+};

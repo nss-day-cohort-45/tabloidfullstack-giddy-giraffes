@@ -148,9 +148,8 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT p.Id, p.Title, p.Content, 
-                               p.ImageLocation,
-                               p.CreateDateTime, p.PublishDateTime, p.IsApproved, p.CategoryId, p.UserProfileId,
+                        SELECT p.Id, p.Title, p.Content, p.ImageLocation, p.CreateDateTime, 
+                               p.PublishDateTime, p.IsApproved, p.CategoryId, p.UserProfileId,
 
                                c.Name,
 
