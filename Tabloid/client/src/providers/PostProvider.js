@@ -12,7 +12,7 @@ export const PostProvider = (props) => {
   };
 
   const getPostById = (postId) => {
-      return fetch(`/api/post/${postId}`)
+    return fetch(`/api/post/${postId}`)
       .then(res => res.json())
   };
 
