@@ -48,7 +48,7 @@ export default function Header() {
           </Nav>
 
           <Nav className="mr-auto" navbar>
-            {/* When isLoggedIn === true, we will render the Home link */}
+            {/* When isLoggedIn === true, we will render the Posts link */}
             {isLoggedIn && (
               <NavItem>
                 <NavLink tag={RRNavLink} to="/post">
@@ -59,10 +59,10 @@ export default function Header() {
           </Nav>
 
           <Nav className="mr-auto" navbar>
-            {/* When isLoggedIn === true, we will render the Home link */}
+            {/* When isLoggedIn === true, we will render the My Posts link */}
             {isLoggedIn && (
               <NavItem>
-                <NavLink tag={RRNavLink} to="/post/mypost">
+                <NavLink tag={RRNavLink} to="/post/my-posts">
                   My Posts
                 </NavLink>
               </NavItem>

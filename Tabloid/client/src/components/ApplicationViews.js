@@ -44,7 +44,7 @@ export default function ApplicationViews() {
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/post/myposts" exact>
+        <Route path="/post/my-posts" exact>
             {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
 

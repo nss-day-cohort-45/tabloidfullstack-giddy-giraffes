@@ -16,9 +16,10 @@ export const PostProvider = (props) => {
       .then(res => res.json())
   };
 
-  const getPostsByUser = () => {
-    return fetch(`/api/post/user-posts`)
+  const getPostsByUser = (userId) => {
+    return fetch(`/api/post/user-posts/${userId}`)
     .then(res => res.json())
+    .then(setPosts);
 };
 
   return (

@@ -1,30 +1,23 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { PostContext } from "../../providers/PostProvider";
 import Post from "./Post";
 
 const MyPosts = () => {
-  const [post, setPost] = useState();
-  const { getPostsByUser } = useContext(PostContext);
+  const { posts, getPostsByUser } = useContext(PostContext);
 
   useEffect(() => {
-    let userId = localStorage.getItem('id');
-    getPostsByUser(userId)
-    .then(setPost)
+    let user = localStorage.getItem('userProfile');
+    console.log(user);
+    getPostsByUser(user.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!post) {
-    return null;
-  }
-
   return (
-    <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-sm-12 col-lg-6">
-          <Post post={post} />
-        </div>
-      </div>
-    </div>
+    <section>
+        {posts.map((p) => (
+        <Post key={p.id} post={p} />
+        ))}
+    </section>
   );
 };
 
