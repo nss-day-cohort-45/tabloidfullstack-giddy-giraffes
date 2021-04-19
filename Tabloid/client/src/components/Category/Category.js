@@ -17,11 +17,20 @@ const Category = ({ category }) => {
                 <p>
                     <strong>{category.name}</strong>
                 </p>
-                <Button variant="secondary" onClick={categoryDelete} className="btn-primary">
+                <Button variant="secondary" onClick={() => {
+                    const confirmBox = window.confirm(
+                        "Do you really want to delete this Category?"
+                    )
+                    if (confirmBox === true) {
+                        categoryDelete(deleteCategory)
+                    }
+                }} className="delete-button">
                     Delete
                 </Button>
             </CardBody>
         </Card>
+
     );
+
 };
 export default Category;
