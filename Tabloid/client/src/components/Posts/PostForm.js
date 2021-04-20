@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react"
+
 import { PostContext } from "../../providers/PostProvider.js";
 
 export const PostForm = () => {
-    const { addPost, getAllPosts } = useContext(PostContext)
+    const { addPost } = useContext(PostContext)
 
     //With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
     //Define the initial state of the form inputs with useState()
@@ -10,14 +11,15 @@ export const PostForm = () => {
         title: "",
         content: "",
         imageLocation: "",
-        publishDateTime: "",
+        createDateTime: "",
         isApproved: Boolean,
-        categoryId: 0,
-        userProfileId: 0
+        categoryId: 0
     });
 
     //wait for data before button is active
     const [isLoading, setIsLoading] = useState(false);
+
+
 
     //when a field changes, update state. The return will re-render and display based on the values in state
     //Controlled component
@@ -36,15 +38,14 @@ export const PostForm = () => {
     }, [post])
 
     const handleClickSavePost = () => {
+        console.log(post)
 
         const title = post.title
         const content = post.content
         const imageLocation = post.imageLocation
-        const createDateTime = Date.now
-        const publishDateTime = post.publishDateTime
+        const createDateTime = post.createDateTime
         const isApproved = true
         const categoryId = parseInt(post.categoryId)
-        const userProfileId = parseInt(post.userProfileId)
 
 
         if (title === "") {
@@ -59,16 +60,12 @@ export const PostForm = () => {
             window.alert("Please insert image")
         }
 
-        else if (publishDateTime === "") {
+        else if (createDateTime === "") {
             window.alert("Please select a date")
         }
 
         else if (categoryId === 0 || categoryId === NaN) {
             window.alert("Please select a category")
-        }
-
-        else if (userProfileId === 0 || userProfileId === NaN) {
-            window.alert("Please select a user")
         }
 
         else {
@@ -80,14 +77,14 @@ export const PostForm = () => {
                 title: post.title,
                 content: post.content,
                 imageLocation: post.imageLocation,
-                publishDateTime: post.publishDateTime,
+                createDateTime: post.createDateTime,
                 isApproved: true,
-                categoryId: post.categoryId,
-                userProfileId: parseInt(post.userProfileId),
-                dateCreated: Date.now
+                categoryId: post.categoryId
             })
-                .then(() => setIsLoading(false))
-                .then(getAllPosts)
+            //after we add the new post object, we then pass that new post object to our .then() function
+            //then we grab the id of the new post
+            //and we push the id of the new post object to our url
+
         }
     }
 
@@ -120,8 +117,8 @@ export const PostForm = () => {
 
                 <fieldset>
                     <div className="form-group">
-                        <label htmlFor="publishDateTime">Published Date Time: </label>
-                        <input type="date" id="publishDateTime" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Published Date Time" value={post.publishDateTime} />
+                        <label htmlFor="createDateTime">Date created: </label>
+                        <input type="date" id="createDateTime" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Date created" value={post.createDateTime} />
                     </div>
                 </fieldset>
 
@@ -131,14 +128,6 @@ export const PostForm = () => {
                         <input type="text" id="categoryId" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Category" value={post.categoryId} />
                     </div>
                 </fieldset>
-
-                <fieldset>
-                    <div className="form-group">
-                        <label htmlFor="userProfileId">User Profile: </label>
-                        <input type="text" id="userProfileId" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="User profile" value={post.userProfileId} />
-                    </div>
-                </fieldset>
-
 
                 <button className="btn btn-primary"
                     disabled={isLoading}
