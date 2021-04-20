@@ -229,5 +229,45 @@ namespace Tabloid.Repositories
                 }
             }
         }
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                // Delete related PostTag rows
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE PostTag WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Delete related Comment rows
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE Comment WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Delete related PostReaction rows
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE PostReaction WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Delete the Post
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE Post WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
