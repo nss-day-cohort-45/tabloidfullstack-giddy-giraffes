@@ -29,7 +29,7 @@ namespace Tabloid.Utils
             var ordinal = reader.GetOrdinal(column);
             if (reader.IsDBNull(ordinal))
             {
-                return null;
+                return "";
             }
 
             return reader.GetString(ordinal);

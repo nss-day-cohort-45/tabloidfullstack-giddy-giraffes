@@ -85,7 +85,6 @@ export function UserProfileProvider(props) {
       .then(setUsers);
   };
   const getUserById = (id) => {
-    debugger
     return fetch(`${apiUrl}/user${id}`)
       .then((res) => res.json())
 
