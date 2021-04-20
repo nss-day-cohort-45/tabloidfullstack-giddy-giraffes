@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { TagContext } from "../providers/TagProvider";
+import { TagContext } from "../../providers/TagProvider";
 import Tag from "./Tag";
 import { Link } from "react-router-dom";
 

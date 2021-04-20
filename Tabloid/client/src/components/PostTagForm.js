@@ -1,65 +1,55 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 import { TagContext } from "../providers/TagProvider";
+import OptionCard from "./OptionCard";
 
 import { useHistory, useParams } from "react-router-dom";
 
 export const PostTagForm = () => {
-  const { addPostTag, getAllTags } = useContext(TagContext);
+  const { addPostTag, getAllTags, tags } = useContext(TagContext);
+  const [arrtags, arrsetTags] = useState([]);
 
   const [tag, setTag] = useState({
     id: 0,
     Name: "",
   });
 
- 
-
   const history = useHistory();
   const { postId } = useParams();
 
   const handleControlledInputChange = (event) => {
-    const newTag = { ...tag };
-    let selectedVal = event.target.value;
-    if (event.target.id.includes("Id")) {
-      selectedVal = parseInt(selectedVal);
-    }
+    // let selectedVal = event.target.value;
+    // let selectedVals = [...selectedVal.options].filter(
+    //   (option) => option.selectedVals
+    // );
 
-    newTag[event.target.id] = selectedVal;
+    // arrsetTags(selectedVals);
 
-    setTag(newTag);
-  };
-
-  // handleChange = (e) => {
-  //   let value = Array.from(e.target.selectedOptions, option => option.value);
-  //   this.setState({values: value});
-  // }
-
-  const handleClickSavePostTag = () => {
-   
-
-      if (tagId) {
-        updateTag({
-          id: tagId,
-          Name: tag.Name,
-        }).then(() => history.push(`/`));
-      } else {
-        addPostTag({
-          PostId : postId
-          TagId : tag.id,
-        }).then(() => history.push(`/`));
+    let selected = [];
+    for (let option of event.target.options) {
+      if (option.selected) {
+        selected.push(option.value);
       }
     }
   };
 
+  const handleClickSavePostTag = () => {
+    arrtags.map((t) =>
+      t
+        .addPostTag({
+          PostId: postId,
+          TagId: t.id,
+        })
+        .then(() => history.push(`/post/${postId}`))
+    );
+  };
+
   useEffect(() => {
-    getAllTags()
-      
+    getAllTags();
   }, []);
 
   return (
     <form className="postTagForm">
-     
-
       <Button
         variant
         className="back_button"
@@ -71,21 +61,25 @@ export const PostTagForm = () => {
       </Button>
 
       <div className="form_background">
-        <fieldset>
+        <FormGroup>
           <div className="form-group">
-            <label htmlFor="Name">Tag name:</label>
-            <input
-              type="text"
-              id="Name"
-              onChange={handleControlledInputChange}
-              required
-              autoFocus
+            <Label htmlFor="Name">Tag name:</Label>
+            <Input
+              type="select"
+              name="Tags"
               className="form-control"
-              placeholder="Tag name"
-              value={tag.Name}
-            />
+              autoFocus
+              required
+              onChange={handleControlledInputChange}
+              id="Tag"
+              multiple
+            >
+              {tags.map((t) => (
+                <OptionCard key={t.id} tag={t} />
+              ))}
+            </Input>
           </div>
-        </fieldset>
+        </FormGroup>
 
         <Button
           variant="secondary"
@@ -93,15 +87,16 @@ export const PostTagForm = () => {
             color: "black",
           }}
           className="add_button"
-       
           onClick={(event) => {
             event.preventDefault();
-            handleClickSaveTag();
+            handleClickSavePostTag();
           }}
         >
-        Add Tags
+          Add Tags
         </Button>
       </div>
     </form>
   );
 };
+
+export default PostTagForm;

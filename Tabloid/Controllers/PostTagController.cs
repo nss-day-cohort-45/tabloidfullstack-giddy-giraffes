@@ -24,12 +24,12 @@ namespace Tabloid.Controllers
 
 
 
-        //[HttpPost]
-        //public IActionResult Post(PostTag postTag)
-        //{
-        //    _postTagRepository.AddPostTag(postTag);
-        //    return CreatedAtAction(nameof(Get), new { id = postTag.Id }, postTag);
-        //}
+        [HttpPost]
+        public IActionResult Post(PostTag postTag)
+        {
+            _postTagRepository.AddPostTag(postTag);
+            return NoContent();
+        }
 
 
 
