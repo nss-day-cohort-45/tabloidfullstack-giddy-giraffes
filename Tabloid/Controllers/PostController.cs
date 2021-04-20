@@ -55,6 +55,36 @@ namespace Tabloid.Controllers
             return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
+        public ActionResult Delete(int id)
+        {
+            UserProfile user = GetCurrentUserProfile();
+
+            Post post = _postRepository.GetById(id);
+
+            if (post.UserProfileId != user.Id)
+            {
+                return NotFound();
+            }
+            return View(post);
+        }
+
+        // POST: PostController/Delete/#
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, Post post)
+        {
+            try
+            {
+                _postRepository.DeletePost(id);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                return View(post);
+            }
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
