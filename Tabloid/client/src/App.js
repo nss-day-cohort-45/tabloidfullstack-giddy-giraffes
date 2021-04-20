@@ -10,16 +10,16 @@ import { PostProvider } from "./providers/PostProvider";
 function App() {
       return (
             <Router>
-                <CategoryProvider>
-                    <TagProvider>
-                        <PostProvider>
-                            <UserProfileProvider>
+                <UserProfileProvider>
+                    <CategoryProvider>
+                        <TagProvider>
+                            <PostProvider>
                                 <Header />
                                 <ApplicationViews />
-                            </UserProfileProvider>
-                        </PostProvider>
-                    </TagProvider>
-                </CategoryProvider>
+                            </PostProvider>
+                        </TagProvider>
+                    </CategoryProvider>
+                </UserProfileProvider>  
             </Router>
       );
 }
