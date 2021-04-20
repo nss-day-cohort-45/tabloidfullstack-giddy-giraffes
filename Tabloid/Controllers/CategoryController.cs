@@ -22,6 +22,18 @@ namespace Tabloid.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var tag = _categoryRepository.GetCategoryById(id);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+            return Ok(tag);
+        }
+
+
         [HttpPost]
         public IActionResult Post(Category category)
         {

@@ -11,9 +11,6 @@ const Category = ({ category }) => {
         deleteCategory(category.id);
     }
 
-    const categoryEdit = () => {
-        updateCategory(category.id);
-    }
 
     return (
         <Card className="m-4">
@@ -22,9 +19,10 @@ const Category = ({ category }) => {
                     <strong>{category.name}</strong>
                 </p>
 
-                <Link to={`/category/edit/${category.id}`}>
-                    <Button type="button">Edit</Button>
-                </Link>
+                <button onClick={() => {
+                    history.push(`/category/edit/${category.id}`)
+                }}>Edit
+                </button>
 
                 <Button variant="secondary" onClick={() => {
                     const confirmBox = window.confirm(
