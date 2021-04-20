@@ -9,43 +9,40 @@ export const PostProvider = (props) => {
 
   const getAllPosts = () => {
     getToken()
-    .then(token => fetch("/api/post",{
+      .then(token => fetch("/api/post", {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
-    })
-    .then(res => res.json())
-    .then(setPosts));
+      })
+        .then(res => res.json())
+        .then(setPosts));
   };
 
   const getPostById = (postId) => {
-<<<<<<< HEAD
     return fetch(`/api/post/${postId}`)
       .then(res => res.json())
-=======
     return getToken()
-    .then(token => fetch(`/api/post/${postId}`,{
+      .then(token => fetch(`/api/post/${postId}`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
-    })
-    .then(res => res.json()))
->>>>>>> 0ad723b22c31d0952279d1d0d171c38e79263ae0
+      })
+        .then(res => res.json()))
   };
 
   const getPostsByUser = () => {
     getToken()
-    .then(token => fetch("/api/post/user-posts",{
+      .then(token => fetch("/api/post/user-posts", {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
-    })
-    .then(res => res.json())
-    .then(setPosts));
-};
+      })
+        .then(res => res.json())
+        .then(setPosts));
+  };
 
   return (
     <PostContext.Provider value={{ posts, getPostById, getAllPosts, getPostsByUser }}>

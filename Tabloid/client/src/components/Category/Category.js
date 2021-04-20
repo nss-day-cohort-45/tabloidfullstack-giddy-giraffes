@@ -23,7 +23,7 @@ const Category = ({ category }) => {
                 </p>
 
                 <Button type="button" onClick={() => {
-                    const confirmBox = window.confirm("Do you really want to delete this Category?")
+                    const confirmBox = window.confirm("Do you really want to edit this Category?")
                     if (confirmBox === true) {
                         history.push(`/category/edit/${category.id}`)
                     }
