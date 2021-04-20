@@ -22,6 +22,18 @@ namespace Tabloid.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var tag = _categoryRepository.GetCategoryById(id);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+            return Ok(tag);
+        }
+
+
         [HttpPost]
         public IActionResult Post(Category category)
         {
@@ -34,6 +46,19 @@ namespace Tabloid.Controllers
         public IActionResult Delete(int id)
         {
             _categoryRepository.Delete(id);
+            return NoContent();
+        }
+
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Category category)
+        {
+            if (id != category.Id)
+            {
+                return BadRequest();
+            }
+
+            _categoryRepository.Update(category);
             return NoContent();
         }
 

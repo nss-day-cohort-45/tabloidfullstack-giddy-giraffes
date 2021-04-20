@@ -28,9 +28,8 @@ namespace Tabloid.Models
         [DataType(DataType.EmailAddress)]
         [MaxLength(255)]
         public string Email { get; set; }
-
         public DateTime CreateDateTime { get; set; }
-
+ 
         [DataType(DataType.Url)]
         [MaxLength(255)]
         public string ImageLocation { get; set; }
