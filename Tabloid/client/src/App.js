@@ -8,6 +8,7 @@ import { TagProvider } from "./providers/TagProvider";
 import { PostProvider } from "./providers/PostProvider";
 
 function App() {
+
       return (
             <Router>
                 <UserProfileProvider>
