@@ -1,8 +1,14 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useContext } from "react";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import { UserProfileContext } from "./UserProfileProvider"
+import { useHistory } from 'react-router-dom';
 
 export const PostContext = createContext();
 
+
 export const PostProvider = (props) => {
+  const { getToken } = useContext(UserProfileContext);
   const [posts, setPosts] = useState([]);
 
   const getAllPosts = () => {
@@ -16,18 +22,27 @@ export const PostProvider = (props) => {
       .then(res => res.json())
   };
 
+  const history = useHistory();
+
   //adding a new post
   const addPost = (post) => {
-    return fetch("/api/post", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post), //this stringifies our post object meaning it changes our object into string object
-    })
-      .then(res => res.json()) //then send the stringified object(res) to the json server, and we will use this in our PostForm after we add new object
-  };
-
+    return getToken().then(token => {
+      return fetch(`/api/post`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(post), //this stringifies our post object meaning it changes our object into string object
+      })
+        .then(res => {
+          const response = res.json()
+          console.log(response)
+          return response;
+        }) //then send the stringified object(res), and we will use this in our PostForm after we add new object
+        .then((postObject) => history.push(`/post/${postObject.id}`))
+    });
+  }
   return (
     <PostContext.Provider value={{ posts, getPostById, getAllPosts, addPost }}>
       {props.children}

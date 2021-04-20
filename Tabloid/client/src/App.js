@@ -8,20 +8,20 @@ import { TagProvider } from "./providers/TagProvider";
 import { PostProvider } from "./providers/PostProvider";
 
 function App() {
-      return (
-            <Router>
-                <CategoryProvider>
-                    <TagProvider>
+    return (
+        <Router>
+            <CategoryProvider>
+                <TagProvider>
+                    <UserProfileProvider>
                         <PostProvider>
-                            <UserProfileProvider>
-                                <Header />
-                                <ApplicationViews />
-                            </UserProfileProvider>
+                            <Header />
+                            <ApplicationViews />
                         </PostProvider>
-                    </TagProvider>
-                </CategoryProvider>
-            </Router>
-      );
+                    </UserProfileProvider>
+                </TagProvider>
+            </CategoryProvider>
+        </Router>
+    );
 }
 
 export default App;
