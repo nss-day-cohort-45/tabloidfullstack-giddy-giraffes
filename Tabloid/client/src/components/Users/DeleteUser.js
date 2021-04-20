@@ -19,10 +19,10 @@ const UserProfile = ({ user }) => {
                 </p>
                 <Button variant="secondary" onClick={() => {
                     const confirmBox = window.confirm(
-                        "Are you sure you would like to delete this user?"
+                        "Are you sure you would like to deactivate this user?"
                     )
                     if (confirmBox === true) {
-                        userProfileDelete(deleteCategory)
+                        userProfileDelete(deleteUser)
                     }
                 }} className="delete-button">
                     Delete
@@ -33,4 +33,4 @@ const UserProfile = ({ user }) => {
     );
 
 };
-export default Category;
+export default UserProfile;

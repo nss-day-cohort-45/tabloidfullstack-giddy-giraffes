@@ -19,11 +19,11 @@ namespace Tabloid.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT up.Id, Up.FirebaseUserId, up.FirstName, up.LastName, up.DisplayName, 
-                               up.Email, up.CreateDateTime, up.ImageLocation, up.UserTypeId,
+                               up.Email, up.CreateDateTime,up.IsDeactivated,  up.ImageLocation, up.UserTypeId,
                                ut.Name AS UserTypeName
                           FROM UserProfile up
                                LEFT JOIN UserType ut on up.UserTypeId = ut.Id
-                         WHERE FirebaseUserId = @FirebaseuserId";
+                        WHERE FirebaseUserId = FirebaseUserId AND up.IsDeactivated = 1";
 
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
 
@@ -35,6 +35,7 @@ namespace Tabloid.Repositories
                         userProfile = new UserProfile()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            IsDeactivated = DbUtils.GetInt(reader, "IsDeactivated"),
                             FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                             FirstName = DbUtils.GetString(reader, "FirstName"),
                             LastName = DbUtils.GetString(reader, "LastName"),
@@ -182,7 +183,7 @@ namespace Tabloid.Repositories
             }
 
         }
-        public void DeactivateUserById(int id)
+        public void Deactivate(int userProfileId)
         {
             using (var conn = Connection)
             {
@@ -192,10 +193,26 @@ namespace Tabloid.Repositories
                     cmd.CommandText = @"
                         UPDATE UserProfile 
                             SET
-                                Deactivated = 1
-                        WHERE id = @id";
+                                isDeactivated = 1
+                        WHERE id = @UserProfileId";
 
-                    cmd.Parameters.AddWithValue("@id", id);
+                    DbUtils.AddParameter(cmd,"@UserProfileId", userProfileId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Reactivate(UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserProfile
+                                            SET IsDeactivated = 0
+                                        WHERE Id = @UserProfileId";
+                    DbUtils.AddParameter(cmd, "@UserProfileId", user.Id);
 
                     cmd.ExecuteNonQuery();
                 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using Tabloid.Models;
 using Tabloid.Repositories;
 
@@ -53,37 +54,28 @@ namespace Tabloid.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
-        [Authorize]
-        public ActionResult DeactivateUser(int id)
+        [HttpDelete("{id}")]
+        public IActionResult Deactivate(int id)
         {
-            UserProfile userProfile = _userProfileRepository.GetUserProfileById(id);
-
-            int userId = GetCurrentUserId();
-
-            UserProfile currentUser = _userProfileRepository.GetUserProfileById(userId);
-
-            if (currentUser.UserTypeId == 1)
-            {
-                return View(userProfile);
-            }
-
-            return NotFound();
+            _userProfileRepository.Deactivate(id);
+            return NoContent();
         }
 
-        // POST: UserProfileController/DeactivateUser/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeactivateUser(int id, UserProfile userProfile)
+        [HttpPut("reactivate/{id}")]
+        public IActionResult Reactivate(int id, UserProfile user)
         {
-            try
+            if (id != user.Id)
             {
-                _userProfileRepository.DeactivateUserById(id);
-                return RedirectToAction("Index");
+                return BadRequest();
             }
-            catch
-            {
-                return Ok();
-            }
+
+            _userProfileRepository.Reactivate(user);
+            return NoContent();
+        }
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }
