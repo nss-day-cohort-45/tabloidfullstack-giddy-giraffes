@@ -16,7 +16,7 @@ namespace Tabloid.Controllers
         private readonly IUserProfileRepository _userProfileRepository;
 
         public PostController(
-            IPostRepository postRepository, 
+            IPostRepository postRepository,
             IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
@@ -53,6 +53,20 @@ namespace Tabloid.Controllers
             post.CreateDateTime = DateTime.Now;
             _postRepository.Add(post);
             return CreatedAtAction("Get", new { id = post.Id }, post);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                _postRepository.Delete(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
 
         private UserProfile GetCurrentUserProfile()
