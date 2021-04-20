@@ -37,12 +37,15 @@ namespace Tabloid.Controllers
         {
             UserProfile profile = _userProfileRepository.GetUserProfileById(id);
 
+
             return Ok(profile);
         }
         [HttpPost]
         public IActionResult Post(UserProfile userProfile)
         {
             userProfile.CreateDateTime = DateTime.Now;
+
+
             userProfile.UserTypeId = UserType.AUTHOR_ID;
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
@@ -50,5 +53,6 @@ namespace Tabloid.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
+
     }
 }
