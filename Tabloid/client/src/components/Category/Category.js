@@ -2,10 +2,13 @@ import React, { useContext } from "react";
 import { Card, CardBody } from "reactstrap";
 import { CategoryContext } from "../../providers/CategoryProvider";
 import { Button } from "reactstrap";
+import { useHistory, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Category = ({ category }) => {
     const { deleteCategory, updateCategory } = useContext(CategoryContext);
+
+    const history = useHistory();
 
     const categoryDelete = () => {
         deleteCategory(category.id);

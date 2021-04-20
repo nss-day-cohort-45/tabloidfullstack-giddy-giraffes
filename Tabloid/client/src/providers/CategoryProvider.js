@@ -13,6 +13,11 @@ export const CategoryProvider = (props) => {
     };
 
 
+    const getCategoryById = (id) => {
+        return fetch(`/api/category/${id}`).then((res) => res.json());
+    };
+
+
     const addCategory = (category) => {
         return fetch("/api/category", {
             method: "POST",
@@ -44,7 +49,7 @@ export const CategoryProvider = (props) => {
 
 
     return (
-        <CategoryContext.Provider value={{ categories, getAllCategories, addCategory, deleteCategory, updateCategory }}>
+        <CategoryContext.Provider value={{ categories, getAllCategories, getCategoryById, addCategory, deleteCategory, updateCategory }}>
             {props.children}
         </CategoryContext.Provider>
     );
