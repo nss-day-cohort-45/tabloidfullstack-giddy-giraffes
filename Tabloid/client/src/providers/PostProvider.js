@@ -1,11 +1,13 @@
 import React, { useState, createContext, useContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
+import { useHistory } from "react-router-dom";
 
 export const PostContext = createContext();
 
 export const PostProvider = (props) => {
   const [posts, setPosts] = useState([]);
   const { getToken } = useContext(UserProfileContext);
+  const history = useHistory();
 
   const getAllPosts = () => {
     getToken()
@@ -20,8 +22,6 @@ export const PostProvider = (props) => {
   };
 
   const getPostById = (postId) => {
-    return fetch(`/api/post/${postId}`)
-      .then(res => res.json())
     return getToken()
       .then(token => fetch(`/api/post/${postId}`, {
         method: "GET",
@@ -46,13 +46,13 @@ export const PostProvider = (props) => {
 
     const deletePost = (postId) =>
     getToken().then((token) =>
-    fetch(`api/post/delete/${postId}`, {
+    fetch(`/api/post/${postId}`, {
         method: "DELETE",
         headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json"
         }})
-        .then(getPostsByUser));
+        .then(history.push("/my-posts")));
 
   return (
     <PostContext.Provider value={{ posts, getPostById, getAllPosts, getPostsByUser, deletePost }}>

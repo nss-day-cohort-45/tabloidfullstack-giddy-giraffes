@@ -55,28 +55,13 @@ namespace Tabloid.Controllers
             return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
-        [HttpGet("delete-post")]
-        public ActionResult Delete(Post post)
-        {
-            UserProfile user = GetCurrentUserProfile();
-
-            if (post.UserProfileId != user.Id)
-            {
-                return NotFound();
-            }
-            return Ok(post);
-        }
-
-        // POST: PostController/Delete/#
         [HttpDelete("{id}")]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
             try
             {
                 _postRepository.Delete(id);
-
-                return RedirectToAction("MyPosts");
+                return Ok();
             }
             catch (Exception)
             {
