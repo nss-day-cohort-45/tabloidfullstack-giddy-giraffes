@@ -1,5 +1,4 @@
 import React, { useState, createContext, useContext } from "react";
-import * as firebase from "firebase/app";
 import "firebase/auth";
 import { UserProfileContext } from "./UserProfileProvider";
 import { useHistory } from "react-router-dom";
@@ -8,7 +7,6 @@ export const PostContext = createContext();
 
 
 export const PostProvider = (props) => {
-  const { getToken } = useContext(UserProfileContext);
   const [posts, setPosts] = useState([]);
   const { getToken } = useContext(UserProfileContext);
   const history = useHistory();
