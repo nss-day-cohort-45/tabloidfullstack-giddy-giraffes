@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, CardHeader, CardText, CardImg} from "reactstrap";
+import { Card, CardBody, CardHeader, CardText, CardImg, Button} from "reactstrap";
 
 const OnePost = ({ post }) => {
     let date = new Date (post.publishDateTime);
@@ -24,6 +24,10 @@ const OnePost = ({ post }) => {
                     By: {post.userProfile.displayName}           
                 </small>
             </CardText>
+            {/* {post.userProfile.id == sessionStorage.getItem("userProfile").json().id}(
+                <Button>Delete</Button>
+            ) */}
+
         </CardBody>
     </Card>
   );

@@ -16,7 +16,7 @@ namespace Tabloid.Controllers
         private readonly IUserProfileRepository _userProfileRepository;
 
         public PostController(
-            IPostRepository postRepository, 
+            IPostRepository postRepository,
             IUserProfileRepository userProfileRepository)
         {
             _postRepository = postRepository;
@@ -55,33 +55,32 @@ namespace Tabloid.Controllers
             return CreatedAtAction("Get", new { id = post.Id }, post);
         }
 
-        public ActionResult Delete(int id)
+        [HttpGet("delete-post")]
+        public ActionResult Delete(Post post)
         {
             UserProfile user = GetCurrentUserProfile();
-
-            Post post = _postRepository.GetById(id);
 
             if (post.UserProfileId != user.Id)
             {
                 return NotFound();
             }
-            return View(post);
+            return Ok(post);
         }
 
         // POST: PostController/Delete/#
-        [HttpPost]
+        [HttpDelete("{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, Post post)
+        public ActionResult Delete(int id)
         {
             try
             {
-                _postRepository.DeletePost(id);
+                _postRepository.Delete(id);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("MyPosts");
             }
             catch (Exception)
             {
-                return View(post);
+                return NotFound();
             }
         }
 
