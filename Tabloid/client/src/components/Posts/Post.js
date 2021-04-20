@@ -17,6 +17,7 @@ const Post = ({ post }) => {
                  Category: {post.category.name}
                 </small>
             </CardText>
+            
         </CardBody>
     </Card>
   );

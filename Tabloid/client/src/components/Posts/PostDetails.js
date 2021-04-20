@@ -10,7 +10,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     getPostById(id)
-    .then(setPost)
+    .then(setPost);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -1,8 +1,8 @@
 import React, { useState, createContext, useContext } from "react";
 import * as firebase from "firebase/app";
 import "firebase/auth";
-import { UserProfileContext } from "./UserProfileProvider"
-import { useHistory } from 'react-router-dom';
+import { UserProfileContext } from "./UserProfileProvider";
+import { useHistory } from "react-router-dom";
 
 export const PostContext = createContext();
 
@@ -10,19 +10,20 @@ export const PostContext = createContext();
 export const PostProvider = (props) => {
   const { getToken } = useContext(UserProfileContext);
   const [posts, setPosts] = useState([]);
+  const { getToken } = useContext(UserProfileContext);
+  const history = useHistory();
 
   const getAllPosts = () => {
-    return fetch("/api/post")
-      .then(res => res.json())
-      .then(setPosts);
+    getToken()
+      .then(token => fetch("/api/post", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(res => res.json())
+        .then(setPosts));
   };
-
-  const getPostById = (postId) => {
-    return fetch(`/api/post/${postId}`)
-      .then(res => res.json())
-  };
-
-  const history = useHistory();
 
   //adding a new post
   const addPost = (post) => {
@@ -43,8 +44,42 @@ export const PostProvider = (props) => {
         .then((postObject) => history.push(`/post/${postObject.id}`))
     });
   }
+
+  const getPostById = (postId) => {
+    return getToken()
+      .then(token => fetch(`/api/post/${postId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(res => res.json()))
+  };
+
+  const getPostsByUser = () => {
+    getToken()
+      .then(token => fetch("/api/post/user-posts", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+        .then(res => res.json())
+        .then(setPosts));
+  };
+
+    const deletePost = (postId) =>
+    getToken().then((token) =>
+    fetch(`/api/post/${postId}`, {
+        method: "DELETE",
+        headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+        }})
+        .then(history.push("/my-posts")));
+
   return (
-    <PostContext.Provider value={{ posts, getPostById, getAllPosts, addPost }}>
+    <PostContext.Provider value={{ posts, getPostById, getAllPosts, addPost, getPostsByUser, deletePost }}>
       {props.children}
     </PostContext.Provider>
   );
