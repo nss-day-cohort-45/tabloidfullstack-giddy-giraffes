@@ -68,11 +68,6 @@ export default function CategoryForm() {
             <FormGroup>
                 <h2 className="categoryForm__title">{categoryId ? "Save Category" : "Add Category"}</h2>
 
-                <Button variant className="back-button" onClick={() => {
-                    history.goBack();
-                }}>
-                </Button>
-
                 <div className="form-background">
                     <fieldset>
                         <div className="form-group">

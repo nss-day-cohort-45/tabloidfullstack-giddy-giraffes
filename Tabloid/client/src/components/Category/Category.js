@@ -22,10 +22,14 @@ const Category = ({ category }) => {
                     <strong>{category.name}</strong>
                 </p>
 
-                <button onClick={() => {
-                    history.push(`/category/edit/${category.id}`)
-                }}>Edit
-                </button>
+                <Button type="button" onClick={() => {
+                    const confirmBox = window.confirm("Do you really want to delete this Category?")
+                    if (confirmBox === true) {
+                        history.push(`/category/edit/${category.id}`)
+                    }
+                }} className="delete-button">
+                    Edit
+                    </Button>
 
                 <Button variant="secondary" onClick={() => {
                     const confirmBox = window.confirm(
