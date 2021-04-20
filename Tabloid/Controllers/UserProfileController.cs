@@ -53,6 +53,37 @@ namespace Tabloid.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
+        [Authorize]
+        public ActionResult DeactivateUser(int id)
+        {
+            UserProfile userProfile = _userProfileRepository.GetUserProfileById(id);
 
+            int userId = GetCurrentUserId();
+
+            UserProfile currentUser = _userProfileRepository.GetUserProfileById(userId);
+
+            if (currentUser.UserTypeId == 1)
+            {
+                return View(userProfile);
+            }
+
+            return NotFound();
+        }
+
+        // POST: UserProfileController/DeactivateUser/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeactivateUser(int id, UserProfile userProfile)
+        {
+            try
+            {
+                _userProfileRepository.DeactivateUserById(id);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return Ok();
+            }
+        }
     }
 }

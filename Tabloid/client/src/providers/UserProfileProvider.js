@@ -78,6 +78,11 @@ export function UserProfileProvider(props) {
       }).then((resp) => resp.json())
     );
   };
+  const deleteUser = (id) => {
+    return fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    }).then(getAllCategories);
+  };
 
   const getAllUsers = () => {
     return fetch(apiUrl)
@@ -103,7 +108,8 @@ export function UserProfileProvider(props) {
         register,
         getToken,
         getAllUsers,
-        getUserById
+        getUserById,
+        deleteUser
       }}
     >
       {isFirebaseReady ? (

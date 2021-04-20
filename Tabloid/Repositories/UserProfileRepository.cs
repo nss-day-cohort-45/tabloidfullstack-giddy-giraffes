@@ -180,6 +180,26 @@ namespace Tabloid.Repositories
                     return userProfile;
                 }
             }
+
+        }
+        public void DeactivateUserById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE UserProfile 
+                            SET
+                                Deactivated = 1
+                        WHERE id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         /*
