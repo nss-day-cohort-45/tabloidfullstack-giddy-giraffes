@@ -140,6 +140,70 @@ namespace Tabloid.Repositories
             }
         }
 
+        public List<Post> GetPostsByUser(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT p.Id, p.Title, p.Content, p.ImageLocation, p.CreateDateTime, 
+                               p.PublishDateTime, p.IsApproved, p.CategoryId, p.UserProfileId,
+
+                               c.Name,
+
+                               up.DisplayName, up.FirstName,
+                               up.LastName, up.Email, up.ImageLocation
+
+                          FROM Post p
+                          LEFT JOIN Category c ON p.CategoryId = c.Id
+                          LEFT JOIN UserProfile up ON p.UserProfileId = up.Id
+                          WHERE p.UserProfileId = @id
+                          ORDER BY p.CreateDateTime";
+
+                    DbUtils.AddParameter(cmd, "@id", userId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var posts = new List<Post>();
+
+                    while (reader.Read())
+                    {
+                        var post = new Post()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Title = reader.GetString(reader.GetOrdinal("Title")),
+                            Content = reader.GetString(reader.GetOrdinal("Content")),
+                            ImageLocation = DbUtils.GetNullableString(reader, "ImageLocation"),
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            PublishDateTime = DbUtils.GetNullableDateTime(reader, "PublishDateTime"),
+                            IsApproved = reader.GetBoolean(reader.GetOrdinal("IsApproved")),
+                            CategoryId = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                            Category = new Category()
+                            {
+                                Id = DbUtils.GetInt(reader, "CategoryId"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                            },
+                            UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                            UserProfile = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "UserProfileId"),
+                                DisplayName = DbUtils.GetString(reader, "DisplayName"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                ImageLocation = DbUtils.GetString(reader, "ImageLocation")
+                            } 
+                        };
+                        posts.Add(post);
+                    }
+                    reader.Close();
+                    return posts;
+                }
+            }
+        }
+
         public void Add(Post post)
         {
             using (var conn = Connection)
@@ -162,6 +226,46 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@UserProfileId", post.UserProfileId);
 
                     post.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                // Delete related PostTag rows
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE PostTag WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Delete related Comment rows
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE Comment WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Delete related PostReaction rows
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE PostReaction WHERE PostId = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Delete the Post
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE Post WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
