@@ -8,7 +8,7 @@ const PostTag = ({ postTag }) => {
     <Card className="m-4">
       <CardBody>
         <p>
-          <strong>Tags:{postTag.Name}</strong>
+          <strong>Tags:{postTag.name}</strong>
         </p>
       </CardBody>
     </Card>
