@@ -32,12 +32,12 @@ export default function ApplicationViews() {
           <Login />
         </Route>
 
-        <Route path="/userprofile" exact>
-          <UserList />
-        </Route>
-
         <Route path="/register">
           <Register />
+        </Route>
+
+        <Route path="/userprofile" exact>
+            {isLoggedIn ? <UserList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/post/add" exact>
@@ -59,8 +59,9 @@ export default function ApplicationViews() {
         <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
+
         <Route exact path="/userprofile/user:userId(\d+)">
-          <UserDetail />
+            {isLoggedIn ?  <UserDetail /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/category/add" exact>
