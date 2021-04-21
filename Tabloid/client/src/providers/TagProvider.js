@@ -42,9 +42,21 @@ export const TagProvider = (props) => {
     });
   };
 
+  const GetTagsByPostId = (postId) => {
+    return fetch(`/api/tag/GetTagsByPostId${postId}`).then((res) => res.json());
+  };
+
   return (
     <TagContext.Provider
-      value={{ tags, getAllTags, addTag, deleteTag, updateTag, getTagById }}
+      value={{
+        tags,
+        getAllTags,
+        addTag,
+        deleteTag,
+        updateTag,
+        getTagById,
+        GetTagsByPostId,
+      }}
     >
       {props.children}
     </TagContext.Provider>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { TagContext } from "../providers/TagProvider";
+import { TagContext } from "../../providers/TagProvider";
 
 import { useHistory, useParams } from "react-router-dom";
 
@@ -86,7 +86,6 @@ export const TagForm = () => {
               autoFocus
               className="form-control"
               placeholder="Tag name"
-              value={tag.Name}
             />
           </div>
         </fieldset>
