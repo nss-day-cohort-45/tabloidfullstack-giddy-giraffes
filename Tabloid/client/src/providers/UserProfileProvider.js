@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
+import { useHistory } from "react-router-dom";
 import { Spinner } from "reactstrap";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -6,6 +7,7 @@ import "firebase/auth";
 export const UserProfileContext = createContext();
 
 export function UserProfileProvider(props) {
+  const history = useHistory();
   const apiUrl = "/api/userprofile";
   const [users, setUsers] = useState([]);
 
@@ -35,6 +37,7 @@ export function UserProfileProvider(props) {
       .auth()
       .signOut()
       .then(() => {
+        history.push('/login');
         sessionStorage.clear();
         setIsLoggedIn(false);
       });
@@ -80,18 +83,27 @@ export function UserProfileProvider(props) {
   };
 
   const getAllUsers = () => {
-    return fetch(apiUrl)
-      .then((res) => res.json())
-      .then(setUsers);
+    return getToken()
+    .then(token => fetch(apiUrl, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then((res) => res.json())
+    .then(setUsers));
   };
+
   const getUserById = (id) => {
-    return fetch(`${apiUrl}/user${id}`)
-      .then((res) => res.json())
-
-
+    return getToken()
+    .then(token => fetch(`${apiUrl}/user${id}`, {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then((res) => res.json()))
   };
-
-
 
   return (
     <UserProfileContext.Provider

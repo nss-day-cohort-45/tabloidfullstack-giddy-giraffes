@@ -11,7 +11,7 @@ export const PostProvider = (props) => {
   const history = useHistory();
 
   const getAllPosts = () => {
-    getToken().then((token) =>
+    return getToken().then((token) =>
       fetch("/api/post", {
         method: "GET",
         headers: {
@@ -36,7 +36,6 @@ export const PostProvider = (props) => {
       })
         .then((res) => {
           const response = res.json();
-          console.log(response);
           return response;
         }) //then send the stringified object(res), and we will use this in our PostForm after we add new object
         .then((postObject) => history.push(`/post/${postObject.id}`));
@@ -55,7 +54,7 @@ export const PostProvider = (props) => {
   };
 
   const getPostsByUser = () => {
-    getToken().then((token) =>
+    return getToken().then((token) =>
       fetch("/api/post/user-posts", {
         method: "GET",
         headers: {
