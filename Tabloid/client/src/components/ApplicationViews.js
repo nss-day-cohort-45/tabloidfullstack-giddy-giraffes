@@ -13,6 +13,7 @@ import TagList from "./Tags/TagList";
 import { TagForm } from "./Tags/TagForm";
 import UserDetail from "./Users/UserDetails";
 import PostList from "./Posts/PostList";
+import PostForm from "./Posts/PostForm";
 import PostDetails from "./Posts/PostDetails";
 import MyPosts from "./Posts/MyPosts";
 import PostTagForm from "./PostTagForm";
@@ -39,6 +40,10 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
+        <Route path="/post/add" exact>
+          {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/post" exact>
           {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
@@ -59,6 +64,10 @@ export default function ApplicationViews() {
         </Route>
 
         <Route path="/category/add" exact>
+          {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/category/edit/:categoryId(\d+)" exact>
           {isLoggedIn ? <CategoryForm /> : <Redirect to="/login" />}
         </Route>
 
