@@ -74,7 +74,7 @@ export default function ApplicationViews() {
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/posttag/add" exact>
+        <Route path="/posttag/:posttagId(\d+)" exact>
           {isLoggedIn ? <PostTagForm /> : <Redirect to="/login" />}
         </Route>
       </Switch>

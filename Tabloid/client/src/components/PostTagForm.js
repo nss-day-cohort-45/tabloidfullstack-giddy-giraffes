@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import { PostTagContext } from "../providers/PostTagProvider";
 import { TagContext } from "../providers/TagProvider";
 import OptionCard from "./OptionCard";
-
 import { useHistory, useParams } from "react-router-dom";
 
 export const PostTagForm = () => {
-  const { addPostTag, getAllTags, tags } = useContext(TagContext);
+  const { addPostTags } = useContext(PostTagContext);
+  const { getAllTags, tags } = useContext(TagContext);
   const [arrtags, arrsetTags] = useState([]);
 
   const [tag, setTag] = useState({
@@ -15,7 +16,7 @@ export const PostTagForm = () => {
   });
 
   const history = useHistory();
-  const { postId } = useParams();
+  const { id } = useParams();
 
   const handleControlledInputChange = (event) => {
     // let selectedVal = event.target.value;
@@ -31,16 +32,15 @@ export const PostTagForm = () => {
         selected.push(option.value);
       }
     }
+    arrsetTags(selected);
   };
 
   const handleClickSavePostTag = () => {
     arrtags.map((t) =>
-      t
-        .addPostTag({
-          PostId: postId,
-          TagId: t.id,
-        })
-        .then(() => history.push(`/post/${postId}`))
+      addPostTags({
+        PostId: id,
+        TagId: t.id,
+      }).then(() => history.push(`/post/${id}`))
     );
   };
 

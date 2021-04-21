@@ -4,7 +4,7 @@ import { UserProfileContext } from "./UserProfileProvider";
 export const PostTagContext = React.createContext();
 
 export const PostTagProvider = (props) => {
-  const addPostTag = (posttag) => {
+  const addPostTags = (posttag) => {
     return fetch("/api/posttag", {
       method: "POST",
       headers: {
@@ -15,8 +15,8 @@ export const PostTagProvider = (props) => {
   };
 
   return (
-    <TagContext.Provider value={{ addPostTag }}>
+    <PostTagContext.Provider value={{ addPostTags }}>
       {props.children}
-    </TagContext.Provider>
+    </PostTagContext.Provider>
   );
 };

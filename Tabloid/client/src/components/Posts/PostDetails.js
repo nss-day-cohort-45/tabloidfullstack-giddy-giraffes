@@ -35,7 +35,7 @@ const PostDetails = () => {
 
   return (
     <div className="container">
-      <Link to="/posttag/add" className="nav-link">
+      <Link to={`/posttag/${id}`} className="nav-link">
         Manage Tags
       </Link>
       <div className="row justify-content-center">
