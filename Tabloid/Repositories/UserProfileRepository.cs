@@ -35,7 +35,7 @@ namespace Tabloid.Repositories
                         userProfile = new UserProfile()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            IsDeactivated = DbUtils.GetInt(reader, "IsDeactivated"),
+                            IsDeactivated = reader.GetByte(reader.GetOrdinal("IsDeactivated")),
                             FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                             FirstName = DbUtils.GetString(reader, "FirstName"),
                             LastName = DbUtils.GetString(reader, "LastName"),

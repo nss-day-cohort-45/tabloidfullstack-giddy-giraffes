@@ -54,7 +54,7 @@ namespace Tabloid.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("deactivated")]
         public IActionResult Deactivate(int id)
         {
             _userProfileRepository.Deactivate(id);
