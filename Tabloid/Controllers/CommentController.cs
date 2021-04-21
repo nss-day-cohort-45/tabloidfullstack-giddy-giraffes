@@ -1,16 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TabloidMVC.Repositories;
 
 namespace Tabloid.Controllers
 {
-    public class HomeController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CommentController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly ICommentRepository _commentRepository;
+        public CommentController(ICommentRepository commentRepository)
         {
-            return View();
+            _commentRepository = commentRepository;
         }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok(_commentRepository.GetAllComments());
+        }
+
+
+        [HttpGet("GetCommentByPostId{postId}")]
+        public IActionResult GetCommentByPostId(int postId)
+        {
+            var comment = _commentRepository.GetCommentByPostId(postId);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return Ok(comment);
+        }
+
     }
 }

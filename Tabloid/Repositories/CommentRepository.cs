@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System;
 using TabloidMVC.Utils;
-using Tabloid.Repositories;
 using Tabloid.Models;
+using Tabloid.Repositories;
 
 namespace TabloidMVC.Repositories
 {
-    public class CommentRepository : ICommentRepository, ICommentRepository
+    public class CommentRepository : BaseRepository, ICommentRepository
     {
         public CommentRepository(IConfiguration config) : base(config) { }
         public List<Comment> GetAllComments()
@@ -20,13 +20,11 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT c.Id AS CommentId, c.Subject, c.Content, c.CreateDateTime,
-                              p.Id AS PostId, p.Title,
-                              u.Id AS UserId, u.DisplayName
-                         FROM Comment c
-                              LEFT JOIN Post p ON c.PostId = p.id
-                              LEFT JOIN UserProfile u ON c.UserProfileId = u.id
-                         ORDER BY c.CreateDateTime DECS;";
+                       SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime, up.DisplayName
+				           
+                        FROM Post p
+                         Left JOIN Comment c ON p.Id = c.PostId
+                         LEFT JOIN UserProfile up ON c.UserProfileId = up.Id";
                     var reader = cmd.ExecuteReader();
 
                     var comments = new List<Comment>();
@@ -36,22 +34,28 @@ namespace TabloidMVC.Repositories
                         Comment comment = new Comment()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("CommentId")),
+                            PostId = reader.GetInt32(reader.GetOrdinal("PostId")),
                             Subject = reader.GetString(reader.GetOrdinal("Subject")),
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             Content = reader.GetString(reader.GetOrdinal("Content")),
-                            CreationDate = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
+                            DisplayName = new UserProfile() { DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")) },
+
                         };
 
+                        /*
                         comment.Post = new Post()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("PostId")),
                             Title = reader.GetString(reader.GetOrdinal("Title"))
                         };
 
+                        
                         comment.UserProfile = new UserProfile()
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("UserId")),
                             DisplayName = reader.GetString(reader.GetOrdinal("DisplayName"))
                         };
+                        */
 
 
                         comments.Add(comment);
@@ -66,7 +70,7 @@ namespace TabloidMVC.Repositories
 
 
 
-        public List<Comment> GetCommentsByPostId(int postId)
+        public List<Comment> GetCommentByPostId(int postId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -99,21 +103,13 @@ namespace TabloidMVC.Repositories
                             PostId = reader.GetInt32(reader.GetOrdinal("PostId")),
                             Subject = reader.GetString(reader.GetOrdinal("Subject")),
                             Content = reader.GetString(reader.GetOrdinal("Content")),
-                            CreationDate = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
-                            UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId"))
+                            CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
+                            UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
+                            DisplayName = new UserProfile() { DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")) }
                         };
 
-                        comment.Post = new Post()
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("PostId")),
-                            Title = reader.GetString(reader.GetOrdinal("Title"))
-                        };
 
-                        comment.UserProfile = new UserProfile()
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("UserId")),
-                            DisplayName = reader.GetString(reader.GetOrdinal("DisplayName"))
-                        };
+                      
 
                         comments.Add(comment);
                     }

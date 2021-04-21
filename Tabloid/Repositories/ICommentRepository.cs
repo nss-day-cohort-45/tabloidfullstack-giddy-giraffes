@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Tabloid.Models;
+﻿using Tabloid.Models;
 
 namespace TabloidMVC.Repositories
 {
@@ -8,8 +7,8 @@ namespace TabloidMVC.Repositories
         void Add(Comment comment);
         void DeleteComment(int id);
         void EditComment(Comment comment);
-        List<Comment> GetAllComments();
+        System.Collections.Generic.List<Comment> GetAllComments();
         Comment GetCommentById(int id);
-        List<Comment> GetCommentsByPostId(int postId);
+        System.Collections.Generic.List<Comment> GetCommentByPostId(int postId);
     }
 }
