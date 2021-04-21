@@ -74,6 +74,7 @@ namespace Tabloid.Controllers
             }
         }
 
+        // Retrieves the current user object by using the provided firebaseId
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

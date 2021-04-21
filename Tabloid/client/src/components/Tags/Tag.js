@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Card, CardBody } from "reactstrap";
-import { TagContext } from "../providers/TagProvider";
+import { TagContext } from "../../providers/TagProvider";
 import { useHistory } from "react-router-dom";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
