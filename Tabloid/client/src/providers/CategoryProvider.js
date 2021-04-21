@@ -1,52 +1,70 @@
-import React, { useState, useContext } from "react";
+import React, { useState, createContext, useContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
 
-export const CategoryContext = React.createContext();
+export const CategoryContext = createContext();
 
 export const CategoryProvider = (props) => {
+    const { getToken } = useContext(UserProfileContext);
     const [categories, setCategories] = useState([]);
 
     const getAllCategories = () => {
-        return fetch("/api/category")
-            .then((res) => res.json())
-            .then(setCategories);
+        return getToken()
+        .then(token => fetch("/api/category",{
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+        })
+        .then((res) => res.json())
+        .then(setCategories));
     };
-
 
     const getCategoryById = (id) => {
-        return fetch(`/api/category/${id}`).then((res) => res.json());
+        return getToken()
+        .then(token => fetch(`/api/category/${id}`,{
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((res) => res.json()));
     };
-
 
     const addCategory = (category) => {
-        return fetch("/api/category", {
+        return getToken()
+        .then(token => fetch("/api/category", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(category),
-        });
+        }));
     };
-
 
     const deleteCategory = (categoryId) => {
-        return fetch(`/api/category/${categoryId}`, {
+        return getToken()
+        .then(token => fetch(`/api/category/${categoryId}`, {
             method: "DELETE",
-        }).then(getAllCategories);
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(getAllCategories));
     };
 
-
     const updateCategory = (category) => {
-        return fetch(`/api/category/${category.id}`, {
+        return getToken()
+        .then(token => fetch(`/api/category/${category.id}`, {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(category),
         })
-            .then(getAllCategories)
+        .then(getAllCategories))
     };
-
 
     return (
         <CategoryContext.Provider value={{ categories, getAllCategories, getCategoryById, addCategory, deleteCategory, updateCategory }}>
