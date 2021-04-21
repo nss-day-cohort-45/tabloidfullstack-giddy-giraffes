@@ -48,7 +48,7 @@ export default function ApplicationViews() {
           {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/post/:id" exact>
+        <Route path="/post/:id(\d+)" exact>
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
@@ -83,7 +83,7 @@ export default function ApplicationViews() {
           {isLoggedIn ? <TagForm /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/posttag/:posttagId(\d+)" exact>
+        <Route path="/posttag/:postId(\d+)" exact>
           {isLoggedIn ? <PostTagForm /> : <Redirect to="/login" />}
         </Route>
       </Switch>

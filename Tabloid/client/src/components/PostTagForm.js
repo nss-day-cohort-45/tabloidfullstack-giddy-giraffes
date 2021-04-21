@@ -7,45 +7,35 @@ import { useHistory, useParams } from "react-router-dom";
 
 export const PostTagForm = () => {
   const { addPostTags } = useContext(PostTagContext);
-  const { getAllTags, tags } = useContext(TagContext);
-  const [arrtags, arrsetTags] = useState([]);
-
-  const [tag, setTag] = useState({
-    id: 0,
-    Name: "",
-  });
+  const { getAllTags, tags, setTags } = useContext(TagContext);
+  const [postTags, setPostTags] = useState("");
 
   const history = useHistory();
-  const { id } = useParams();
-
+  const { postId } = useParams();
   const handleControlledInputChange = (event) => {
     // let selectedVal = event.target.value;
     // let selectedVals = [...selectedVal.options].filter(
     //   (option) => option.selectedVals
     // );
-
     // arrsetTags(selectedVals);
+    // let selected = [];
+    // for (let option of event.target.options) {
+    //   if (option.selected) {
+    //     selected.push(option.value);
+    //   }
+    // }
+    // arrsetTags(selected);
 
-    let selected = [];
-    for (let option of event.target.options) {
-      if (option.selected) {
-        selected.push(option.value);
-      }
-    }
-    arrsetTags(selected);
-  };
+    console.log(postId);
+    const newPostTag = { ...postTags };
+    newPostTag.tagId = postTags;
+    newPostTag.postId = postId;
 
-  const handleClickSavePostTag = () => {
-    arrtags.map((t) =>
-      addPostTags({
-        PostId: id,
-        TagId: t.id,
-      }).then(() => history.push(`/post/${id}`))
-    );
+    addPostTags(newPostTag).then(history.push(`/post/${postId}`));
   };
 
   useEffect(() => {
-    getAllTags();
+    getAllTags().then(setTags);
   }, []);
 
   return (
@@ -62,23 +52,15 @@ export const PostTagForm = () => {
 
       <div className="form_background">
         <FormGroup>
-          <div className="form-group">
-            <Label htmlFor="Name">Tag name:</Label>
-            <Input
-              type="select"
-              name="Tags"
-              className="form-control"
-              autoFocus
-              required
-              onChange={handleControlledInputChange}
-              id="Tag"
-              multiple
-            >
-              {tags.map((t) => (
-                <OptionCard key={t.id} tag={t} />
-              ))}
-            </Input>
-          </div>
+          <Label for="postTag">Add a Tag </Label>
+          <select id="postTag" onChange={(e) => setPostTags(e.target.value)}>
+            <option value="0">Select a tag </option>
+            {tags.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
+            ))}
+          </select>
         </FormGroup>
 
         <Button
@@ -87,10 +69,7 @@ export const PostTagForm = () => {
             color: "black",
           }}
           className="add_button"
-          onClick={(event) => {
-            event.preventDefault();
-            handleClickSavePostTag();
-          }}
+          onClick={handleControlledInputChange}
         >
           Add Tags
         </Button>
