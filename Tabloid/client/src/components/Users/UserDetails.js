@@ -12,7 +12,6 @@ const UserDetail = () => {
 
 
     useEffect(() => {
-        console.log("useEffect", userId)
         getUserById(userId)
             .then((response) => {
 
