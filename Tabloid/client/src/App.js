@@ -6,23 +6,26 @@ import ApplicationViews from "./components/ApplicationViews";
 import { CategoryProvider } from "./providers/CategoryProvider";
 import { TagProvider } from "./providers/TagProvider";
 import { PostProvider } from "./providers/PostProvider";
+import { CommentProvider } from "./providers/CommentProvider";
 
 function App() {
 
-      return (
-            <Router>
-                <UserProfileProvider>
-                    <CategoryProvider>
-                        <TagProvider>
-                            <PostProvider>
+    return (
+        <Router>
+            <UserProfileProvider>
+                <CategoryProvider>
+                    <TagProvider>
+                        <PostProvider>
+                            <CommentProvider>
                                 <Header />
                                 <ApplicationViews />
-                            </PostProvider>
-                        </TagProvider>
-                    </CategoryProvider>
-                </UserProfileProvider>  
-            </Router>
-      );
+                            </CommentProvider>
+                        </PostProvider>
+                    </TagProvider>
+                </CategoryProvider>
+            </UserProfileProvider>
+        </Router>
+    );
 }
 
 export default App;
