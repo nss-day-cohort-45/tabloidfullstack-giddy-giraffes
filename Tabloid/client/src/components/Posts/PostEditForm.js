@@ -3,11 +3,12 @@ import { useParams } from "react-router-dom";
 import { PostContext } from "../../providers/PostProvider.js";
 
 export const PostEditForm = () => {
-    const { addPost, getPostById } = useContext(PostContext)
+    const { updatePost, getPostById } = useContext(PostContext)
     const { postId } = useParams();
     //With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
     //Define the initial state of the form inputs with useState()
     const [post, setPost] = useState({
+        id: 0,
         title: "",
         content: "",
         imageLocation: "",
@@ -43,6 +44,7 @@ export const PostEditForm = () => {
     }
 
     const handleClickSavePost = () => {
+        const id = post.id
         const title = post.title
         const content = post.content
         const imageLocation = post.imageLocation
@@ -74,8 +76,8 @@ export const PostEditForm = () => {
             //disable the button - no extra clicks
             setIsLoading(true); //this ensures the user cannot repeatedly click the button while the API is being updated
 
-            //POST - add
-            addPost({ //if not, this must be a new note so the input fields will be empty
+            updatePost({ 
+                id,
                 title,
                 content,
                 imageLocation,
@@ -93,7 +95,7 @@ export const PostEditForm = () => {
     return (
         <>
             <form className="postForm">
-                <h2 className="postForm__title">Add new post</h2>
+                <h2 className="postForm__title">Edit post</h2>
 
                 <fieldset>
                     <div className="form-group">
@@ -137,7 +139,7 @@ export const PostEditForm = () => {
                         event.preventDefault()
                         handleClickSavePost()
                     }}>
-                    Add post</button>
+                    Save changes</button>
             </form>
         </>
     )
