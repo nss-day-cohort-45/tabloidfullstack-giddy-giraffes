@@ -1,9 +1,12 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { PostContext } from "../../providers/PostProvider.js";
+import { PostContext } from "../../providers/PostProvider";
+import { CategoryContext } from "../../providers/CategoryProvider";
 
 export const PostEditForm = () => {
-    const { updatePost, getPostById } = useContext(PostContext)
+    const { updatePost, getPostById } = useContext(PostContext);
+    const { getAllCategories, categories } = useContext(CategoryContext);
+
     const { postId } = useParams();
     //With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
     //Define the initial state of the form inputs with useState()
@@ -22,11 +25,12 @@ export const PostEditForm = () => {
 
     // Sets the state of post to the values from the original post
     useEffect(() => {
-        getPostById(postId)
+        getAllCategories()
+        .then(getPostById(postId)
         .then((oldPost) => {
             oldPost.publishDateTime = new Date(oldPost.publishDateTime).toLocaleDateString('en-CA');
             setPost(oldPost);
-        });
+        }))
     }, [])
 
     //when a field changes, update state. The return will re-render and display based on the values in state
@@ -129,7 +133,9 @@ export const PostEditForm = () => {
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="categoryId">Category: </label>
-                        <input type="text" id="categoryId" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Category" value={post.categoryId} />
+                        <select className="form-control" defaultValue={post.categoryId} onChange={handleControlledInputChange}>
+                            {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
+                        </select>
                     </div>
                 </fieldset>
 
