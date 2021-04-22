@@ -13,7 +13,7 @@ export const PostForm = () => {
     title: "",
     content: "",
     imageLocation: "",
-    createDateTime: "",
+    publishDateTime: "",
     isApproved: Boolean,
     categoryId: 0,
   });
@@ -134,16 +134,16 @@ export const PostForm = () => {
 
         <fieldset>
           <div className="form-group">
-            <label htmlFor="createDateTime">Date created: </label>
+            <label htmlFor="publishDateTime">Date created: </label>
             <input
               type="date"
-              id="createDateTime"
+              id="publishDateTime"
               onChange={handleControlledInputChange}
               required
               autoFocus
               className="form-control"
               placeholder="Date created"
-              value={post.createDateTime}
+              value={post.publishDateTime}
             />
           </div>
         </fieldset>

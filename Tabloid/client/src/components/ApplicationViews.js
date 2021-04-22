@@ -56,6 +56,10 @@ export default function ApplicationViews() {
           {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
 
+        <Route path="/post/edit/:id(\d+)" exact>
+          {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
+        </Route>
+
         <Route path="/category" exact>
           {isLoggedIn ? <CategoryList /> : <Redirect to="/login" />}
         </Route>
