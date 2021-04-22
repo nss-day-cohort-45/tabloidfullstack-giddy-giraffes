@@ -5,6 +5,7 @@ export const PostTagContext = createContext();
 
 export const PostTagProvider = (props) => {
   const { getToken } = useContext(UserProfileContext);
+  const [postTags, setPostTags] = useState([]);
 
   const addPostTags = (posttag) => {
     return getToken().then((token) => {
@@ -30,7 +31,7 @@ export const PostTagProvider = (props) => {
   // };
 
   return (
-    <PostTagContext.Provider value={{ addPostTags }}>
+    <PostTagContext.Provider value={{ addPostTags, postTags, setPostTags }}>
       {props.children}
     </PostTagContext.Provider>
   );
