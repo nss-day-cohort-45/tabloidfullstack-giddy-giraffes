@@ -8,7 +8,7 @@ export const PostTagProvider = (props) => {
 
   const addPostTags = (posttag) => {
     return getToken().then((token) => {
-      fetch(`/api/posttag`, {
+      return fetch("/api/posttag", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -41,7 +41,6 @@ export const PostTagForm = () => {
   return (
     <form className="postTagForm">
       <Button
-        variant
         className="back_button"
         onClick={() => {
           history.goBack();
