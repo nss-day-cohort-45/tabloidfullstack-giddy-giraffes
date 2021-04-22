@@ -12,6 +12,7 @@ export const CommentProvider = (props) => {
     const history = useHistory();
 
     const getAllComments = (postId) => {
+        console.log(postId, "this is post id")
         return getToken()
             .then(token => fetch(`/api/comment/getCommentByPostId/${postId}`, {
                 method: "GET",
