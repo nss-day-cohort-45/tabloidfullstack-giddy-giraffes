@@ -17,6 +17,8 @@ import PostForm from "./Posts/PostForm";
 import PostDetails from "./Posts/PostDetails";
 import MyPosts from "./Posts/MyPosts";
 
+import CommentList from "./Comment/CommentList";
+
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
 
@@ -39,6 +41,10 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
+        <Route exact path="/Comment/GetCommentByPostId:postId(\d+)" >
+          <CommentList />
+        </Route>
+
         <Route path="/post/add" exact>
           {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
         </Route>
@@ -52,7 +58,7 @@ export default function ApplicationViews() {
         </Route>
 
         <Route path="/my-posts" exact>
-            {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
+          {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/category" exact>
