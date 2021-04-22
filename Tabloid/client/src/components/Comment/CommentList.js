@@ -6,6 +6,7 @@ import Comment from "./Comment";
 const CommentList = () => {
     const { comments, getAllComments } = useContext(CommentContext);
 
+
     // When the user arrives at localhost:3000/post, request all posts
     // that have been approved and that have a published date before this moment.
     // Posts are already sorted by published dates descending

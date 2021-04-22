@@ -41,7 +41,7 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
-        <Route exact path="/Comment/GetCommentByPostId:postId(\d+)" >
+        <Route path="/Comment/GetCommentByPostId/:postId(\d+)" >
           <CommentList />
         </Route>
 

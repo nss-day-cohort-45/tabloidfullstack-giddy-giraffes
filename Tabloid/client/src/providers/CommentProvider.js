@@ -12,8 +12,8 @@ export const CommentProvider = (props) => {
     const history = useHistory();
 
     const getAllComments = (postId) => {
-        getToken()
-            .then(token => fetch(`/api/GetCommentByPostId/${postId}`, {
+        return getToken()
+            .then(token => fetch(`/api/comment/getCommentByPostId/${postId}`, {
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`
