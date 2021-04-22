@@ -7,9 +7,13 @@ export const PostEditForm = () => {
     const { updatePost, getPostById } = useContext(PostContext);
     const { getAllCategories, categories } = useContext(CategoryContext);
 
+    //wait for data before button is active
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Get the postId from the url in order to retrieve the relevant post
     const { postId } = useParams();
-    //With React, we do not target the DOM with `document.querySelector()`. Instead, our return (render) reacts to state or props.
-    //Define the initial state of the form inputs with useState()
+   
+    // Set the initial state of post
     const [post, setPost] = useState({
         id: 0,
         title: "",
@@ -20,9 +24,7 @@ export const PostEditForm = () => {
         categoryId: 0
     });
 
-    //wait for data before button is active
-    const [isLoading, setIsLoading] = useState(false);
-
+    // Gets a list of all categories (for the category dropdown) &
     // Sets the state of post to the values from the original post
     useEffect(() => {
         getAllCategories()
@@ -33,21 +35,20 @@ export const PostEditForm = () => {
         }))
     }, [])
 
-    //when a field changes, update state. The return will re-render and display based on the values in state
-    //Controlled component
+    // Handles changes to any input field
     const handleControlledInputChange = (event) => {
-        /* When changing a state object or array,
-        always create a copy, make changes, and then set state.*/
+        // saves the most recent version of the post state to a local variable
         const newPost = { ...post }
 
-        /* post is an object with properties.
-        Set the property to the new value using object bracket notation. */
+        // Ex newPost[categoryId] = 2
         newPost[event.target.id] = event.target.value
+
         // update state
         setPost(newPost)
     }
 
-    const handleClickSavePost = () => {
+    // Handles saving the new edited post
+    const handleClickEditPost = () => {
         const id = post.id
         const title = post.title
         const content = post.content
@@ -60,26 +61,23 @@ export const PostEditForm = () => {
             window.alert("Please type in title of post")
         }
 
-        else if (content === "") {
+        if (content === "") {
             window.alert("Please fill out content")
         }
 
-        else if (imageLocation === "") {
+        if (imageLocation === "") {
             window.alert("Please insert image")
         }
 
-        else if (publishDateTime === "") {
+        if (publishDateTime === "") {
             window.alert("Please select a date")
-        }
-
-        else if (categoryId === 0 || categoryId === NaN) {
-            window.alert("Please select a category")
         }
 
         else {
             //disable the button - no extra clicks
-            setIsLoading(true); //this ensures the user cannot repeatedly click the button while the API is being updated
-
+            setIsLoading(true);
+            
+            // Send the new post object to server side to update the original post
             updatePost({ 
                 id,
                 title,
@@ -89,10 +87,6 @@ export const PostEditForm = () => {
                 isApproved,
                 categoryId
             });
-            //after we add the new post object, we then pass that new post object to our .then() function
-            //then we grab the id of the new post
-            //and we push the id of the new post object to our url
-
         }
     }
 
@@ -133,7 +127,7 @@ export const PostEditForm = () => {
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="categoryId">Category: </label>
-                        <select className="form-control" defaultValue={post.categoryId} onChange={handleControlledInputChange}>
+                        <select id="categoryId" className="form-control" value={post.categoryId} onChange={handleControlledInputChange}>
                             {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
                         </select>
                     </div>
@@ -143,7 +137,7 @@ export const PostEditForm = () => {
                     disabled={isLoading}
                     onClick={event => {
                         event.preventDefault()
-                        handleClickSavePost()
+                        handleClickEditPost()
                     }}>
                     Save changes</button>
             </form>
