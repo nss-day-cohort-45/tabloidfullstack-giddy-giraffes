@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using TabloidMVC.Models;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
-using System;
-using TabloidMVC.Utils;
 using Tabloid.Models;
 using Tabloid.Repositories;
 
@@ -138,7 +135,7 @@ namespace TabloidMVC.Repositories
                             @Subject, @Content, @CreateDateTime, @UserProfileId, @PostId )";
                     cmd.Parameters.AddWithValue("@Subject", comment.Subject);
                     cmd.Parameters.AddWithValue("@Content", comment.Content);
-                    cmd.Parameters.AddWithValue("@CreateDateTime", comment.CreationDate);
+                    cmd.Parameters.AddWithValue("@CreateDateTime", comment.CreateDateTime);
                     cmd.Parameters.AddWithValue("@UserProfileId", comment.UserProfileId);
                     cmd.Parameters.AddWithValue("@PostId", comment.PostId);
 
