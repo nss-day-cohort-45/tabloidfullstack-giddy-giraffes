@@ -221,7 +221,7 @@ namespace Tabloid.Repositories
                     DbUtils.AddParameter(cmd, "@ImageLocation", post.ImageLocation);
                     DbUtils.AddParameter(cmd, "@CreateDateTime", post.CreateDateTime);
                     DbUtils.AddParameter(cmd, "@PublishDateTime", post.PublishDateTime);
-                    DbUtils.AddParameter(cmd, "@IsApproved", true);
+                    DbUtils.AddParameter(cmd, "@IsApproved", post.IsApproved);
                     DbUtils.AddParameter(cmd, "@CategoryId", post.CategoryId);
                     DbUtils.AddParameter(cmd, "@UserProfileId", post.UserProfileId);
 

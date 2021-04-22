@@ -55,7 +55,7 @@ namespace Tabloid.Controllers
             var currentUserProfile = GetCurrentUserProfile();
             
             post.UserProfileId = currentUserProfile.Id;
-            post.PublishDateTime = DateTime.Now;
+            post.CreateDateTime = DateTime.Now;
             _postRepository.Add(post);
             return CreatedAtAction("Get", new { id = post.Id }, post);
         }
