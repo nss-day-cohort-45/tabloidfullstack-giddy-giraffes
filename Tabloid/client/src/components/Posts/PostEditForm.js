@@ -49,45 +49,35 @@ export const PostEditForm = () => {
 
     // Handles saving the new edited post
     const handleClickEditPost = () => {
-        const id = post.id
-        const title = post.title
-        const content = post.content
-        const imageLocation = post.imageLocation
-        const publishDateTime = post.publishDateTime
-        const isApproved = true
-        const categoryId = parseInt(post.categoryId)
+        const id = post.id;
+        const title = post.title;
+        const content = post.content;
+        const imageLocation = post.imageLocation;
+        const publishDateTime = post.publishDateTime;
+        const isApproved = true;
+        const categoryId = parseInt(post.categoryId);
 
-        if (title === "") {
-            window.alert("Please type in title of post")
-        }
+        if (title === "") return window.alert("Please enter a title.");
+        
+        if (content === "") return window.alert("Please add content to the post.");
+        
+        if (imageLocation === "") return window.alert("Please add an image.");
+        
+        if (publishDateTime === "") return window.alert("Please select a publish date.");
 
-        if (content === "") {
-            window.alert("Please fill out content")
-        }
-
-        if (imageLocation === "") {
-            window.alert("Please insert image")
-        }
-
-        if (publishDateTime === "") {
-            window.alert("Please select a date")
-        }
-
-        else {
-            //disable the button - no extra clicks
-            setIsLoading(true);
-            
-            // Send the new post object to server side to update the original post
-            updatePost({ 
-                id,
-                title,
-                content,
-                imageLocation,
-                publishDateTime,
-                isApproved,
-                categoryId
-            });
-        }
+        //disable the button - no extra clicks
+        setIsLoading(true);
+        
+        // Send the new post object to server side to update the original post
+        updatePost({ 
+            id,
+            title,
+            content,
+            imageLocation,
+            publishDateTime,
+            isApproved,
+            categoryId
+        });
     }
 
     return (
