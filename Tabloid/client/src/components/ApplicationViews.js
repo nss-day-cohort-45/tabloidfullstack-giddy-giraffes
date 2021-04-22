@@ -48,11 +48,15 @@ export default function ApplicationViews() {
           {isLoggedIn ? <PostList /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/post/:id" exact>
+        <Route path="/post/:id(\d+)" exact>
           {isLoggedIn ? <PostDetails /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/my-posts" exact>
+          {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
+        </Route>
+
+        <Route path="/post/edit/:id(\d+)" exact>
           {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
 
