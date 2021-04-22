@@ -11,7 +11,7 @@ export const PostForm = () => {
         title: "",
         content: "",
         imageLocation: "",
-        createDateTime: "",
+        publishDateTime: "",
         isApproved: Boolean,
         categoryId: 0
     });
@@ -43,10 +43,9 @@ export const PostForm = () => {
         const title = post.title
         const content = post.content
         const imageLocation = post.imageLocation
-        const createDateTime = post.createDateTime
+        const publishDateTime = post.publishDateTime
         const isApproved = true
         const categoryId = parseInt(post.categoryId)
-
 
         if (title === "") {
             window.alert("Please type in title of post")
@@ -60,7 +59,7 @@ export const PostForm = () => {
             window.alert("Please insert image")
         }
 
-        else if (createDateTime === "") {
+        else if (publishDateTime === "") {
             window.alert("Please select a date")
         }
 
@@ -74,13 +73,13 @@ export const PostForm = () => {
 
             //POST - add
             addPost({ //if not, this must be a new note so the input fields will be empty
-                title: post.title,
-                content: post.content,
-                imageLocation: post.imageLocation,
-                createDateTime: post.createDateTime,
-                isApproved: true,
-                categoryId: post.categoryId
-            })
+                title,
+                content,
+                imageLocation,
+                publishDateTime,
+                isApproved,
+                categoryId
+            });
             //after we add the new post object, we then pass that new post object to our .then() function
             //then we grab the id of the new post
             //and we push the id of the new post object to our url
@@ -117,8 +116,8 @@ export const PostForm = () => {
 
                 <fieldset>
                     <div className="form-group">
-                        <label htmlFor="createDateTime">Date created: </label>
-                        <input type="date" id="createDateTime" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Date created" value={post.createDateTime} />
+                        <label htmlFor="publishDateTime">Date published: </label>
+                        <input type="date" id="publishDateTime" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Date published" value={post.publishDateTime} />
                     </div>
                 </fieldset>
 

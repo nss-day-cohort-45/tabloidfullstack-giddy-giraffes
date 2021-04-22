@@ -55,9 +55,21 @@ namespace Tabloid.Controllers
             var currentUserProfile = GetCurrentUserProfile();
             
             post.UserProfileId = currentUserProfile.Id;
-            post.PublishDateTime = DateTime.Now;
+            post.CreateDateTime = DateTime.Now;
             _postRepository.Add(post);
             return CreatedAtAction("Get", new { id = post.Id }, post);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Post post)
+        {
+            if (id != post.Id)
+            {
+                return BadRequest();
+            }
+
+            _postRepository.Update(post);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

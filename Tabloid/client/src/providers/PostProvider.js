@@ -65,6 +65,19 @@ export const PostProvider = (props) => {
         .then(setPosts));
   };
 
+  const updatePost = (post) => {
+    return getToken()
+    .then(token => fetch(`/api/post/${post.id}`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(post),
+    })
+    .then(history.push(`/post/${post.id}`)))
+};
+
     const deletePost = (postId) =>
     getToken().then((token) =>
     fetch(`/api/post/${postId}`, {
@@ -76,7 +89,7 @@ export const PostProvider = (props) => {
         .then(history.push("/my-posts")));
 
   return (
-    <PostContext.Provider value={{ posts, getPostById, getAllPosts, addPost, getPostsByUser, deletePost }}>
+    <PostContext.Provider value={{ posts, getPostById, getAllPosts, getPostsByUser, addPost, updatePost, deletePost }}>
       {props.children}
     </PostContext.Provider>
   );
