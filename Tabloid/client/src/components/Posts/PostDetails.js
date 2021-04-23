@@ -22,6 +22,17 @@ const PostDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const manageTags = (post) => {
+    let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
+    if (post.userProfile.id === currentUser.id) {
+      return (
+        <Link to={`/posttag/${id}`} className="nav-link">
+          Manage Tags
+        </Link>
+      );
+    }
+  };
+
   useEffect(() => {
     GetTagsByPostId(id).then((response) => {
       setTag(response);
@@ -35,9 +46,7 @@ const PostDetails = () => {
 
   return (
     <div className="container">
-      <Link to={`/posttag/${id}`} className="nav-link">
-        Manage Tags
-      </Link>
+      {manageTags(post)}
       <div className="row justify-content-center">
         <div className="col-sm-12 col-lg-6">
           <OnePost post={post} />
