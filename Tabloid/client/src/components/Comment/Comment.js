@@ -1,8 +1,8 @@
+import { Card, CardBody, CardText } from "reactstrap";
 import React from "react";
-import { Card, CardBody, CardHeader, CardText } from "reactstrap";
-import { Link } from "react-router-dom";
 
 const Comment = ({ comment }) => {
+
     if (comment.createDateTime != "") {
         const event = new Date(comment.createDateTime)
         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
@@ -11,6 +11,7 @@ const Comment = ({ comment }) => {
     return (
         <Card className="m-4">
             <CardBody>
+
                 <CardText>
                     <small>
                         DisplayName: {comment.displayName.displayName}
