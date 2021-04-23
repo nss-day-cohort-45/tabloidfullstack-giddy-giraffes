@@ -27,7 +27,7 @@ const OnePost = ({ post }) => {
     <Card className = "m-4">
         <CardHeader tag="h3">{post.title}</CardHeader>
         {post.imageLocation != null} 
-            <CardImg src={post.imageLocation} alt="Card image"/>        
+            <CardImg top width="100%"  src={post.imageLocation} alt="Card image"/>        
         <CardBody>
             <CardText>
                 {post.content}

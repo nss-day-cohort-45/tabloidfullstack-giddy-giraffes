@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { PostContext } from "../../providers/PostProvider";
 import Post from "./Post";
@@ -17,14 +18,16 @@ const PostList = () => {
   // Maps through each PostCategoryUser object, sending 
   // them to be converted to HTML then prints them all out.
   return (
-    <section>
-      <Link to="/post/add" className="nav-link">
-        New Post
-      </Link>
-      {posts.map((p) => (
-        <Post key={p.id} post={p} />
-      ))}
-    </section>
+    <Container>
+        <Link to="/post/add" className="nav-link">
+            New Post
+        </Link> 
+        <Row>
+            {posts.map((p) => (
+                <Col md="4"><Post key={p.id} post={p} /></Col>
+            ))}
+        </Row>
+    </Container>
   );
 };
 

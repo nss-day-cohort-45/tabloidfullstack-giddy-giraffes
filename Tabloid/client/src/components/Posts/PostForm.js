@@ -45,7 +45,7 @@ export const PostForm = () => {
     const title = post.title;
     const content = post.content;
     const imageLocation = post.imageLocation;
-    const createDateTime = post.createDateTime;
+    const publishDateTime = post.publishDateTime;
     const isApproved = true;
     const categoryId = parseInt(post.categoryId);
 
@@ -55,7 +55,7 @@ export const PostForm = () => {
       window.alert("Please fill out content");
     } else if (imageLocation === "") {
       window.alert("Please insert image");
-    } else if (createDateTime === "") {
+    } else if (publishDateTime === "") {
       window.alert("Please select a date");
     } else if (categoryId === 0 || categoryId === NaN) {
       window.alert("Please select a category");
@@ -69,7 +69,7 @@ export const PostForm = () => {
         title: post.title,
         content: post.content,
         imageLocation: post.imageLocation,
-        createDateTime: post.createDateTime,
+        publishDateTime: post.publishDateTime,
         isApproved: true,
         categoryId: post.categoryId,
       });
