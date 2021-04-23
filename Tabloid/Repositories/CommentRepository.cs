@@ -40,22 +40,6 @@ namespace TabloidMVC.Repositories
 
                         };
 
-                        /*
-                        comment.Post = new Post()
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("PostId")),
-                            Title = reader.GetString(reader.GetOrdinal("Title"))
-                        };
-
-                        
-                        comment.UserProfile = new UserProfile()
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("UserId")),
-                            DisplayName = reader.GetString(reader.GetOrdinal("DisplayName"))
-                        };
-                        */
-
-
                         comments.Add(comment);
                     }
 
