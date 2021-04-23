@@ -18,7 +18,7 @@ const Post = ({ post }) => {
     }
 
   return (
-    <Card className = "m-4">
+    <Card className = "m-2">
         <CardHeader><Link to={`post/${post.id}`}>{post.title}</Link></CardHeader>
         <CardBody>
             <CardText>
