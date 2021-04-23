@@ -11,8 +11,8 @@ import { PostTagProvider } from "./providers/PostTagProvider";
 function App() {
   return (
     <Router>
-      <PostTagProvider>
-        <UserProfileProvider>
+      <UserProfileProvider>
+        <PostTagProvider>
           <CategoryProvider>
             <TagProvider>
               <PostProvider>
@@ -21,8 +21,8 @@ function App() {
               </PostProvider>
             </TagProvider>
           </CategoryProvider>
-        </UserProfileProvider>
-      </PostTagProvider>
+        </PostTagProvider>
+      </UserProfileProvider>
     </Router>
   );
 }
