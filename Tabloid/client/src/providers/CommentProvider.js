@@ -24,8 +24,21 @@ export const CommentProvider = (props) => {
                 .then(setComments));
     };
 
+
+    const deleteComment = (commentId) => {
+        return getToken()
+            .then(token => fetch(`/api/category/${commentId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then(getAllComments));
+    };
+
+
     return (
-        <CommentContext.Provider value={{ comments, getAllComments }}>
+        <CommentContext.Provider value={{ comments, getAllComments, deleteComment }}>
             {props.children}
         </CommentContext.Provider>
     );

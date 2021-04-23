@@ -46,6 +46,7 @@ namespace Tabloid.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
+            var currentUserProfile = GetCurrentUserProfile();
             try
             {
                 _commentRepository.DeleteComment(id);
