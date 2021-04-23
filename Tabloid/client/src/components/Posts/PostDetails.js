@@ -49,7 +49,7 @@ const PostDetails = () => {
 
   return (
     <div className="container">
-      <CardHeader><Link to={`/comment/getCommentByPostId/${id}`}>View Comments</Link></CardHeader>
+      <CardHeader><Link to={`/comment/getCommentByPostId/${id}`} class="nav-link">View Comments</Link></CardHeader>
       <Link to={`/posttag/${id}`} className="nav-link">
         Manage Tag
       </Link>

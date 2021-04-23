@@ -12,13 +12,13 @@ const Comment = ({ comment }) => {
     return (
         <div>
             <Link to={`/post/${comment.postId}`}>
-                <h3>
+                <h3 class="title">
                     <small>
                         Title: {comment.title.title}
                     </small>
                 </h3>
             </Link>
-            <Card className="m-4">
+            <Card className="m-4 shadow commentCard">
                 <CardBody>
                     <CardText>
                         <small>
