@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import OnePost from "./OnePost";
 import { CommentContext } from "../../providers/CommentProvider"
 import { Link } from "react-router-dom";
-import Comment from "../Comment/Comment"
+import Comment from "../Comment/Comment";
+import { CardHeader } from "reactstrap";
 
 const PostDetails = () => {
   const [post, setPost] = useState({
@@ -27,12 +28,14 @@ const PostDetails = () => {
   }, []);
 
 
+
   if (!post) {
     return null;
   }
 
   return (
     <div className="container">
+      <CardHeader><Link to={`comment/getCommentByPostId/${postId}`}>View Comments</Link></CardHeader>
       <Link to={`/posttag/${id}`} className="nav-link">
         Manage Comment
       </Link>

@@ -3,6 +3,11 @@ import { Card, CardBody, CardHeader, CardText } from "reactstrap";
 import { Link } from "react-router-dom";
 
 const Comment = ({ comment }) => {
+    if (comment.createDateTime != "") {
+        const event = new Date(comment.createDateTime)
+        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+        comment.createDateTime = event.toLocaleDateString(options)
+    }
     return (
         <Card className="m-4">
             <CardBody>
