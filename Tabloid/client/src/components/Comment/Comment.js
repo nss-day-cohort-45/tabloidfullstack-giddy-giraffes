@@ -8,7 +8,7 @@ const Comment = ({ comment }) => {
             <CardBody>
                 <CardText>
                     <small>
-                        DisplayName: {comment.userProfile.displayName}
+                        DisplayName: {comment.displayName.displayName}
                     </small>
                 </CardText>
                 <CardText>
@@ -18,7 +18,7 @@ const Comment = ({ comment }) => {
                 </CardText>
                 <CardText>
                     <small>
-                        Content: {comment.Content}
+                        Content: {comment.content}
                     </small>
                 </CardText>
                 <CardText>
