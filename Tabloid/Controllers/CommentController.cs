@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Tabloid.Models;
+using Tabloid.Repositories;
 using TabloidMVC.Repositories;
 
 namespace Tabloid.Controllers
@@ -13,9 +16,12 @@ namespace Tabloid.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository _commentRepository;
-        public CommentController(ICommentRepository commentRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+
+        public CommentController(ICommentRepository commentRepository, IUserProfileRepository userProfileRepository)
         {
             _commentRepository = commentRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         [HttpGet]
@@ -49,6 +55,13 @@ namespace Tabloid.Controllers
             {
                 return NotFound();
             }
+        }
+
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
 
 
