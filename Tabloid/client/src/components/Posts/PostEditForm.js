@@ -6,13 +6,9 @@ import { CategoryContext } from "../../providers/CategoryProvider";
 export const PostEditForm = () => {
     const { updatePost, getPostById } = useContext(PostContext);
     const { getAllCategories, categories } = useContext(CategoryContext);
-
-    //wait for data before button is active
+    const { postId } = useParams();
     const [isLoading, setIsLoading] = useState(false);
 
-    // Get the postId from the url in order to retrieve the relevant post
-    const { postId } = useParams();
-   
     // Set the initial state of post
     const [post, setPost] = useState({
         id: 0,
@@ -29,62 +25,60 @@ export const PostEditForm = () => {
     useEffect(() => {
         getAllCategories()
         .then(getPostById(postId)
-        .then((oldPost) => {
+        .then(oldPost => {
+
+            // Convert the original date mm/dd/yyyy to yyyy/mm/dd so the original date  
+            // can be stored as the default value for the publish date input.
             oldPost.publishDateTime = new Date(oldPost.publishDateTime).toLocaleDateString('en-CA');
+            
+            // Save the original post to the local state variable, post
             setPost(oldPost);
         }))
     }, [])
 
     // Handles changes to any input field
     const handleControlledInputChange = (event) => {
-        // saves the most recent version of the post state to a local variable
-        const newPost = { ...post }
+
+        // saves the most recent version of the post object to newPost
+        const newPost = { ...post };
 
         // Ex newPost[categoryId] = 2
-        newPost[event.target.id] = event.target.value
+        newPost[event.target.id] = event.target.value;
 
         // update state
-        setPost(newPost)
-    }
+        setPost(newPost);
+    };
 
     // Handles saving the new edited post
     const handleClickEditPost = () => {
-        const id = post.id;
-        const title = post.title;
-        const content = post.content;
-        const imageLocation = post.imageLocation;
-        const publishDateTime = post.publishDateTime;
-        const isApproved = true;
-        const categoryId = parseInt(post.categoryId);
-
-        if (title === "") return window.alert("Please enter a title.");
         
-        if (content === "") return window.alert("Please add content to the post.");
-        
-        if (imageLocation === "") return window.alert("Please add an image.");
-        
-        if (publishDateTime === "") return window.alert("Please select a publish date.");
+        // Check to make sure all relevant input fields have data
+        if (post.title === "") return window.alert("Please enter a title.");   
+        if (post.content === "") return window.alert("Please add content to the post.");
+        if (post.imageLocation === "") return window.alert("Please add an image url.");
+        if (post.publishDateTime === "") return window.alert("Please select a publish date.");
 
         //disable the button - no extra clicks
         setIsLoading(true);
         
         // Send the new post object to server side to update the original post
         updatePost({ 
-            id,
-            title,
-            content,
-            imageLocation,
-            publishDateTime,
-            isApproved,
-            categoryId
+            id: post.id,
+            title: post.title,
+            content: post.content,
+            imageLocation: post.imageLocation,
+            publishDateTime: post.publishDateTime,
+            isApproved: post.isApproved,
+            categoryId: post.categoryId
         });
-    }
+    };
 
     return (
         <>
             <form className="postForm">
                 <h2 className="postForm__title">Edit post</h2>
 
+                {/* Title */}
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="title">Title: </label>
@@ -92,6 +86,7 @@ export const PostEditForm = () => {
                     </div>
                 </fieldset>
 
+                {/* Content */}
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="content">Content: </label>
@@ -100,6 +95,7 @@ export const PostEditForm = () => {
                     </div>
                 </fieldset>
 
+                {/* Image */}
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="imageLocation">Image: </label>
@@ -107,6 +103,7 @@ export const PostEditForm = () => {
                     </div>
                 </fieldset>
 
+                {/* Publish Date */}
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="publishDateTime">Date published: </label>
@@ -114,6 +111,7 @@ export const PostEditForm = () => {
                     </div>
                 </fieldset>
 
+                {/* Category */}
                 <fieldset>
                     <div className="form-group">
                         <label htmlFor="categoryId">Category: </label>
@@ -123,6 +121,7 @@ export const PostEditForm = () => {
                     </div>
                 </fieldset>
 
+                {/* Save Button */}
                 <button className="btn btn-primary"
                     disabled={isLoading}
                     onClick={event => {
@@ -132,7 +131,7 @@ export const PostEditForm = () => {
                     Save changes</button>
             </form>
         </>
-    )
-}
+    );
+};
 
 export default PostEditForm;
