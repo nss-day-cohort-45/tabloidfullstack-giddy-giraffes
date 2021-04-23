@@ -1,0 +1,9 @@
+.commentCard:hover {
+    transition: all 0.25s;
+	transform: scale(1.05);
+	background-color: rgba(218, 91, 123, 0.781);
+}
+
+.title {
+    background-color: white;
+}

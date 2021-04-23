@@ -12,7 +12,7 @@ import { PostTagProvider } from "./providers/PostTagProvider";
 function App() {
 
     return (
-        <Router>
+        <Router class="allBackground">
             <UserProfileProvider>
                 <PostTagProvider>
                     <CategoryProvider>

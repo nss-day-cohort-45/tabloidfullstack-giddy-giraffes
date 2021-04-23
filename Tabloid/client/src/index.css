@@ -1,7 +1,9 @@
 @import "styles/post.css";
-
+@import "styles/comment.css";
 main {
 	margin: 2em;
+	background-color: rgb(197, 245, 247);
+	background-image: url(pictures/magazine.jpg);
 }
 .app-spinner {
 	position: fixed;
@@ -18,3 +20,13 @@ p {
 .post p {
 	white-space: pre-wrap;
 }
+
+.button, .back_button, .delete-button, .add-button, .btn-primary, .back_button, .btn-secondary {
+	background-color: rgb(226, 43, 128);
+	margin: 4px;
+}
+
+.nav-link {
+	background-color: white;
+}
+
