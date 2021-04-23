@@ -7,25 +7,27 @@ import { CategoryProvider } from "./providers/CategoryProvider";
 import { TagProvider } from "./providers/TagProvider";
 import { PostProvider } from "./providers/PostProvider";
 import { CommentProvider } from "./providers/CommentProvider";
+import { PostTagProvider } from "./providers/PostTagProvider";
 
 function App() {
 
     return (
         <Router>
             <UserProfileProvider>
-                <CategoryProvider>
-                    <TagProvider>
-                        <PostProvider>
-                            <CommentProvider>
-                                <Header />
-                                <ApplicationViews />
-                            </CommentProvider>
-                        </PostProvider>
-                    </TagProvider>
-                </CategoryProvider>
+                <PostTagProvider>
+                    <CategoryProvider>
+                        <TagProvider>
+                            <PostProvider>
+                                <CommentProvider>
+                                    <Header />
+                                    <ApplicationViews />
+                                </CommentProvider>
+                            </PostProvider>
+                        </TagProvider>
+                    </CategoryProvider>
+                </PostTagProvider>
             </UserProfileProvider>
         </Router>
     );
 }
-
 export default App;

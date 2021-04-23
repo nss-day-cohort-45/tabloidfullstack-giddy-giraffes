@@ -10,7 +10,7 @@ using Tabloid.Repositories;
 
 namespace Tabloid.Controllers
 {
- 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TagController : ControllerBase
@@ -64,7 +64,16 @@ namespace Tabloid.Controllers
             return NoContent();
         }
 
-
+        [HttpGet("GetTagsByPostId{postId}")]
+        public IActionResult GetTagsByPostId(int postId)
+        {
+            var tag = _tagRepository.GetTagsByPostId(postId);
+            if (tag == null)
+            {
+                return NotFound();
+            }
+            return Ok(tag);
+        }
 
 
 

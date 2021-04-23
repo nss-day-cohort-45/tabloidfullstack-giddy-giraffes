@@ -230,6 +230,34 @@ namespace Tabloid.Repositories
             }
         }
 
+        public void Update(Post post)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE Post
+                           SET Title = @Title, 
+                               Content = @Content,
+                               CategoryId = @CategoryId,
+                               ImageLocation = @ImageLocation,
+                               PublishDateTime = @PublishDateTime
+                         WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", post.Id);
+                    DbUtils.AddParameter(cmd, "@Title", post.Title);
+                    DbUtils.AddParameter(cmd, "@Content", post.Content);
+                    DbUtils.AddParameter(cmd, "@CategoryId", post.CategoryId);
+                    DbUtils.AddParameter(cmd, "@ImageLocation", post.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@PublishDateTime", post.PublishDateTime);
+                    
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void Delete(int id)
         {
             using (var conn = Connection)

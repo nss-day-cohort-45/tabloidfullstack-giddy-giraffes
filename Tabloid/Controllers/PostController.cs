@@ -55,9 +55,16 @@ namespace Tabloid.Controllers
             var currentUserProfile = GetCurrentUserProfile();
             
             post.UserProfileId = currentUserProfile.Id;
-            post.PublishDateTime = DateTime.Now;
+            post.CreateDateTime = DateTime.Now;
             _postRepository.Add(post);
             return CreatedAtAction("Get", new { id = post.Id }, post);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(Post post)
+        {
+            _postRepository.Update(post);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
@@ -74,6 +81,7 @@ namespace Tabloid.Controllers
             }
         }
 
+        // Retrieves the current user object by using the provided firebaseId
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
