@@ -16,6 +16,8 @@ import PostList from "./Posts/PostList";
 import PostForm from "./Posts/PostForm";
 import PostDetails from "./Posts/PostDetails";
 import MyPosts from "./Posts/MyPosts";
+import CommentList from "./Comment/CommentList"
+
 import PostTagForm from "./PostTagForm";
 import PostEditForm from "./Posts/PostEditForm";
 
@@ -37,8 +39,11 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
+        <Route exact path="/comment/getCommentByPostId/:id" >
+          {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
+        </Route>
         <Route path="/userprofile" exact>
-            {isLoggedIn ? <UserList /> : <Redirect to="/login" />}
+          {isLoggedIn ? <UserList /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/post/add" exact>
@@ -66,7 +71,7 @@ export default function ApplicationViews() {
         </Route>
 
         <Route exact path="/userprofile/user:userId(\d+)">
-            {isLoggedIn ?  <UserDetail /> : <Redirect to="/login" />}
+          {isLoggedIn ? <UserDetail /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/category/add" exact>
