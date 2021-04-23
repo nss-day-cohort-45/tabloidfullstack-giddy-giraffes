@@ -1,3 +1,5 @@
 .postCard:hover {
-	transform: scale(1.1);
+	transition: all 0.25s;
+	transform: scale(1.05);
+	background-color: rgb(230, 228, 228);
 }
