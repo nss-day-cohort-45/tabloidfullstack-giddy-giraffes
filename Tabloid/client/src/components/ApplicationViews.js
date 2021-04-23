@@ -17,6 +17,7 @@ import PostForm from "./Posts/PostForm";
 import PostDetails from "./Posts/PostDetails";
 import MyPosts from "./Posts/MyPosts";
 import PostTagForm from "./PostTagForm";
+import PostEditForm from "./Posts/PostEditForm";
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -56,8 +57,8 @@ export default function ApplicationViews() {
           {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/post/edit/:id(\d+)" exact>
-          {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
+        <Route path="/post/edit/:postId(\d+)" exact>
+          {isLoggedIn ? <PostEditForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/category" exact>
