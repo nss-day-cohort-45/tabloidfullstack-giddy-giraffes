@@ -17,7 +17,7 @@ namespace TabloidMVC.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                       SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime, up.DisplayName
+                       SELECT c.Id, c.PostId, c.UserProfileId, c.Subject, c.Content, c.CreateDateTime, up.DisplayName, p.Title
 				           
                         FROM Post p
                          Left JOIN Comment c ON p.Id = c.PostId
@@ -32,10 +32,11 @@ namespace TabloidMVC.Repositories
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("CommentId")),
                             PostId = reader.GetInt32(reader.GetOrdinal("PostId")),
+                            Title = new Post() { Title = reader.GetString(reader.GetOrdinal("Title")) },
                             Subject = reader.GetString(reader.GetOrdinal("Subject")),
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             Content = reader.GetString(reader.GetOrdinal("Content")),
-                            DisplayName = new UserProfile() { DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")) },
+                            DisplayName = new UserProfile() { DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")) }
 
                         };
 
@@ -102,7 +103,8 @@ namespace TabloidMVC.Repositories
                             Content = reader.GetString(reader.GetOrdinal("Content")),
                             CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime")),
                             UserProfileId = reader.GetInt32(reader.GetOrdinal("UserProfileId")),
-                            DisplayName = new UserProfile() { DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")) }
+                            DisplayName = new UserProfile() { DisplayName = reader.GetString(reader.GetOrdinal("DisplayName")) },
+                            Title = new Post() { Title = reader.GetString(reader.GetOrdinal("Title")) }
                         };
 
 

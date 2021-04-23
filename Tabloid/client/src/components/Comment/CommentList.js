@@ -18,8 +18,8 @@ const CommentList = () => {
     return (
         <section>
             <Link to={`/comment/getCommentByPostId/${id}`} className="nav-link">
-                View Comments
-      </Link>
+
+            </Link>
             {comments.map((c) => (
                 <Comment key={c.id} comment={c} />
             ))}

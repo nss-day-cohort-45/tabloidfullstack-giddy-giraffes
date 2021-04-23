@@ -1,5 +1,6 @@
 import { Card, CardBody, CardText } from "reactstrap";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Comment = ({ comment }) => {
 
@@ -9,31 +10,39 @@ const Comment = ({ comment }) => {
         comment.createDateTime = event.toLocaleDateString(options)
     }
     return (
-        <Card className="m-4">
-            <CardBody>
-
-                <CardText>
+        <div>
+            <Link to={`/post/${comment.postId}`}>
+                <h3>
                     <small>
-                        DisplayName: {comment.displayName.displayName}
+                        Title: {comment.title.title}
                     </small>
-                </CardText>
-                <CardText>
-                    <small>
-                        Subject: {comment.subject}
-                    </small>
-                </CardText>
-                <CardText>
-                    <small>
-                        Content: {comment.content}
-                    </small>
-                </CardText>
-                <CardText>
-                    <small>
-                        CreateDateTime: {comment.createDateTime}
-                    </small>
-                </CardText>
-            </CardBody>
-        </Card>
+                </h3>
+            </Link>
+            <Card className="m-4">
+                <CardBody>
+                    <CardText>
+                        <small>
+                            DisplayName: {comment.displayName.displayName}
+                        </small>
+                    </CardText>
+                    <CardText>
+                        <small>
+                            Subject: {comment.subject}
+                        </small>
+                    </CardText>
+                    <CardText>
+                        <small>
+                            Content: {comment.content}
+                        </small>
+                    </CardText>
+                    <CardText>
+                        <small>
+                            CreateDateTime: {comment.createDateTime}
+                        </small>
+                    </CardText>
+                </CardBody>
+            </Card>
+        </div >
     );
 };
 
