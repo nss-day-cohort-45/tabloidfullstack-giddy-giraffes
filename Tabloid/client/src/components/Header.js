@@ -99,7 +99,7 @@ export default function Header() {
                     style={{ cursor: "pointer" }}
                     onClick={logout}
                   >
-                    Logout ({currentUser.fullName})
+                    Logout ({currentUser.displayName})
                   </a>
                 </NavItem>
 
