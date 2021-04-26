@@ -29,19 +29,6 @@ export const PostTagForm = () => {
     });
   };
 
-  // useEffect(() => {
-  //   getAllTags()
-  //     .then(setTags)
-  //     .then(GetTagsByPostId(postId))
-  //     .then((response) => {
-  //       setTagsOnPost(response);
-  //     })
-  //     .then(() => {
-  //       const taco = tags.filter((t) => !tagsOnPost.includes(t));
-  //       setAvailableTags(taco);
-  //     });
-  // }, []);
-
   useEffect(() => {
     getAllTags();
   }, []);
@@ -51,14 +38,11 @@ export const PostTagForm = () => {
   }, [tags]);
 
   useEffect(() => {
-    console.log(tags, "string");
     const result = tags.filter(
       ({ id: t }) => !tagsOnPost.some(({ id: tg }) => tg === t)
     );
-    // const taco = tags.filter((t) => tagsOnPost.map((tg) => tg.id != t.id));
-    console.log(tagsOnPost, "pain");
+
     setAvailableTags(result);
-    console.log(result, "flavor");
   }, [tagsOnPost]);
 
   return (
