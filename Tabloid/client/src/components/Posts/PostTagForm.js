@@ -52,9 +52,13 @@ export const PostTagForm = () => {
 
   useEffect(() => {
     console.log(tags, "string");
-    const taco = tags.filter((t) => tagsOnPost.forEach((tg) => tg.id != t.id));
-    setAvailableTags(taco);
-    console.log(taco, "flavor");
+    const result = tags.filter(
+      ({ id: t }) => !tagsOnPost.some(({ id: tg }) => tg === t)
+    );
+    // const taco = tags.filter((t) => tagsOnPost.map((tg) => tg.id != t.id));
+    console.log(tagsOnPost, "pain");
+    setAvailableTags(result);
+    console.log(result, "flavor");
   }, [tagsOnPost]);
 
   return (
