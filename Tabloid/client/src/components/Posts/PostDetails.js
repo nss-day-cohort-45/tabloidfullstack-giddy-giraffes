@@ -3,8 +3,9 @@ import { PostContext } from "../../providers/PostProvider";
 import { TagContext } from "../../providers/TagProvider";
 import { useParams } from "react-router-dom";
 import OnePost from "./OnePost";
-import PostTag from "./PostTag";
 import { Link } from "react-router-dom";
+import { CardHeader } from "reactstrap";
+import PostTag from "./PostTag";
 
 const PostDetails = () => {
   const [post, setPost] = useState({
@@ -45,6 +46,10 @@ const PostDetails = () => {
 
   return (
     <div className="container">
+      <CardHeader>
+        <Link to={`/comment/getCommentByPostId/${id}`}>View Comments</Link>
+      </CardHeader>
+
       {manageTags(post)}
       <div className="row justify-content-center">
         <div className="col-sm-12 col-lg-6">

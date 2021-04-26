@@ -16,7 +16,10 @@ import PostList from "./Posts/PostList";
 import PostForm from "./Posts/PostForm";
 import PostDetails from "./Posts/PostDetails";
 import MyPosts from "./Posts/MyPosts";
+import CommentList from "./Comment/CommentList";
+
 import PostTagForm from "./Posts/PostTagForm";
+import PostEditForm from "./Posts/PostEditForm";
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -36,6 +39,9 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
+        <Route exact path="/comment/getCommentByPostId/:id">
+          {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
+        </Route>
         <Route path="/userprofile" exact>
           {isLoggedIn ? <UserList /> : <Redirect to="/login" />}
         </Route>
@@ -56,8 +62,8 @@ export default function ApplicationViews() {
           {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
         </Route>
 
-        <Route path="/post/edit/:id(\d+)" exact>
-          {isLoggedIn ? <MyPosts /> : <Redirect to="/login" />}
+        <Route path="/post/edit/:postId(\d+)" exact>
+          {isLoggedIn ? <PostEditForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/category" exact>
