@@ -134,7 +134,7 @@ export const PostForm = () => {
 
         <fieldset>
           <div className="form-group">
-            <label htmlFor="publishDateTime">Date created: </label>
+            <label htmlFor="publishDateTime">Date published: </label>
             <input
               type="date"
               id="publishDateTime"

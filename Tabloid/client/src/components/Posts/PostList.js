@@ -24,7 +24,7 @@ const PostList = () => {
         </Link> 
         <Row>
             {posts.map((p) => (
-                <Col md="4"><Post key={p.id} post={p} /></Col>
+                <Col key={p.id} md="4"><Post post={p} /></Col>
             ))}
         </Row>
     </Container>
