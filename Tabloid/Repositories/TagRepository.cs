@@ -144,7 +144,7 @@ namespace Tabloid.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT  t.Id, t.[Name], pt.PostId
+                        SELECT  t.Id, t.[Name], pt.PostId, pt.Id AS PostTagId
                         FROM    Tag t
                                 LEFT JOIN PostTag pt on t.Id = pt.TagId
                         WHERE pt.PostId = @postId";
@@ -158,6 +158,7 @@ namespace Tabloid.Repositories
                     while (reader.Read())
                     {
                         tags.Add(NewTagFromReader(reader));
+                       
                     }
 
                     reader.Close();
@@ -176,11 +177,17 @@ namespace Tabloid.Repositories
             return new Tag()
             {
                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                Name = reader.GetString(reader.GetOrdinal("Name"))
+                Name = reader.GetString(reader.GetOrdinal("Name")),
+                 PostTag = new PostTag()
+                 {
+                     Id = DbUtils.GetInt(reader, "PostTagId"),
+                  
+
+                 },
             };
         }
 
-
+      
 
     }
 }

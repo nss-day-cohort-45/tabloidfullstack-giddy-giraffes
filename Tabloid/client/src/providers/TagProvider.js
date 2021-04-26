@@ -6,6 +6,7 @@ export const TagContext = React.createContext();
 export const TagProvider = (props) => {
   const { getToken } = useContext(UserProfileContext);
   const [tags, setTags] = useState([]);
+  const [tagsOnPost, setTagsOnPost] = useState([]);
 
   const getAllTags = () => {
     return getToken().then((token) =>
@@ -75,7 +76,9 @@ export const TagProvider = (props) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }).then((res) => res.json())
+      })
+        .then((res) => res.json())
+        .then(setTagsOnPost)
     );
   };
 
@@ -89,6 +92,7 @@ export const TagProvider = (props) => {
         updateTag,
         getTagById,
         GetTagsByPostId,
+        tagsOnPost,
       }}
     >
       {props.children}
