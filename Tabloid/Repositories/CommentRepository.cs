@@ -210,7 +210,7 @@ namespace TabloidMVC.Repositories
                 {
                     cmd.CommandText = @"
                     DELETE FROM Comment
-                    WHERE ID = @id";
+                    WHERE Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 

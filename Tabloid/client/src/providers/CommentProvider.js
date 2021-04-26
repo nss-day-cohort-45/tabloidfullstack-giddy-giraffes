@@ -25,16 +25,17 @@ export const CommentProvider = (props) => {
     };
 
 
-    const deleteComment = (commentId) => {
-        return getToken()
-            .then(token => fetch(`/api/category/${commentId}`, {
+    const deleteComment = (commentId) =>
+        getToken().then((token) =>
+            fetch(`/api/comment/${commentId}`, {
                 method: "DELETE",
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-                .then(getAllComments));
-    };
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }).then(history.go(0))
+
+        );
 
 
     return (

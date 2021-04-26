@@ -9,11 +9,8 @@ const Comment = ({ comment }) => {
 
     const { deleteComment } = useContext(CommentContext);
 
-    const comDelete = () => {
-        deleteComment(comment.id);
-    }
 
-    const commentDelete = (commentId) => {
+    const comDelete = () => {
         let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
         if (comment.userProfileId === currentUser.id) {
             return <Button type="button" onClick={() => {
@@ -21,14 +18,16 @@ const Comment = ({ comment }) => {
                     "Do you really want to delete this Comment?"
                 )
                 if (confirmBox === true) {
-                    deleteComment(commentId)
+                    deleteComment(comment.id);
                     //use a history.push to send it back to the list of comments
+
                 }
             }} className="delete-button">
                 Delete
             </Button>
         }
     }
+
 
 
     if (comment.createDateTime != "") {
@@ -67,7 +66,7 @@ const Comment = ({ comment }) => {
                             CreateDateTime: {comment.createDateTime}
                         </small>
                     </CardText>
-                    {commentDelete(comment.id)}
+                    {comDelete(comment.id)}
                 </CardBody>
             </Card>
         </div >
