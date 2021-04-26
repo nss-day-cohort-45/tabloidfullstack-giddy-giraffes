@@ -1,8 +1,34 @@
-import { Card, CardBody, CardText } from "reactstrap";
-import React from "react";
-import { Link } from "react-router-dom";
+import { Card, CardBody, CardText, Button } from "reactstrap";
+import { Link, useHistory } from "react-router-dom";
+import { CommentContext } from "../../providers/CommentProvider";
+import React, { useContext } from "react";
+
 
 const Comment = ({ comment }) => {
+    const history = useHistory();
+
+    const { deleteComment } = useContext(CommentContext);
+
+
+    const comDelete = () => {
+        let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
+        if (comment.userProfileId === currentUser.id) {
+            return <Button type="button" onClick={() => {
+                const confirmBox = window.confirm(
+                    "Do you really want to delete this Comment?"
+                )
+                if (confirmBox === true) {
+                    deleteComment(comment.id);
+                    //use a history.push to send it back to the list of comments
+
+                }
+            }} className="delete-button">
+                Delete
+            </Button>
+        }
+    }
+
+
 
     if (comment.createDateTime != "") {
         const event = new Date(comment.createDateTime)
@@ -40,6 +66,7 @@ const Comment = ({ comment }) => {
                             CreateDateTime: {comment.createDateTime}
                         </small>
                     </CardText>
+                    {comDelete(comment.id)}
                 </CardBody>
             </Card>
         </div >
