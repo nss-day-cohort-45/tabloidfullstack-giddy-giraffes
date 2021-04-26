@@ -27,7 +27,7 @@ const Category = ({ category }) => {
                     if (confirmBox === true) {
                         history.push(`/category/edit/${category.id}`)
                     }
-                }} className="delete-button">
+                }} className="edit-button">
                     Edit
                     </Button>
 

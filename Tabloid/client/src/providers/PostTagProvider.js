@@ -20,6 +20,17 @@ export const PostTagProvider = (props) => {
     });
   };
 
+  const deletePostTag = (id) => {
+    return getToken().then((token) =>
+      fetch(`/api/posttag/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    );
+  };
+
   // const addPostTags = (posttag) => {
   //   return fetch(`/api/posttag`, {
   //     method: "POST",
@@ -31,7 +42,9 @@ export const PostTagProvider = (props) => {
   // };
 
   return (
-    <PostTagContext.Provider value={{ addPostTags, postTags, setPostTags }}>
+    <PostTagContext.Provider
+      value={{ addPostTags, postTags, setPostTags, deletePostTag }}
+    >
       {props.children}
     </PostTagContext.Provider>
   );

@@ -8,7 +8,6 @@ import Hello from "./Hello";
 import UserList from "././Users/UserProfileList";
 import CategoryList from "./Category/CategoryList";
 import CategoryForm from "./Category/CategoryForm";
-
 import TagList from "./Tags/TagList";
 import { TagForm } from "./Tags/TagForm";
 import UserDetail from "./Users/UserDetails";
@@ -16,8 +15,8 @@ import PostList from "./Posts/PostList";
 import PostForm from "./Posts/PostForm";
 import PostDetails from "./Posts/PostDetails";
 import MyPosts from "./Posts/MyPosts";
-import CommentList from "./Comment/CommentList"
-import PostTagForm from "./PostTagForm";
+import CommentList from "./Comment/CommentList";
+import PostTagForm from "./Posts/PostTagForm";
 import PostEditForm from "./Posts/PostEditForm";
 import CommentForm from "./Comment/CommentForm";
 
@@ -41,7 +40,7 @@ export default function ApplicationViews() {
           <Register />
         </Route>
 
-        <Route exact path="/comment/getCommentByPostId/:id" >
+        <Route exact path="/comment/getCommentByPostId/:id">
           {isLoggedIn ? <CommentList /> : <Redirect to="/login" />}
         </Route>
         <Route path="/userprofile" exact>

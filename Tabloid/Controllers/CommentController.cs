@@ -46,6 +46,7 @@ namespace Tabloid.Controllers
         {
             var currentUserProfile = GetCurrentUserProfile();
 
+<<<<<<< HEAD
             comment.UserProfileId = currentUserProfile.Id;
             comment.CreateDateTime = DateTime.Now;
             _commentRepository.Add(comment);
@@ -60,10 +61,34 @@ namespace Tabloid.Controllers
         }
 
         // Retrieves the current user object by using the provided firebaseId
+=======
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            try
+            {
+                _commentRepository.DeleteComment(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+
+>>>>>>> main
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> main
     }
 }
