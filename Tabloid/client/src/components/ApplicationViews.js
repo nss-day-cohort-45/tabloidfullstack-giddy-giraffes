@@ -8,7 +8,6 @@ import Hello from "./Hello";
 import UserList from "././Users/UserProfileList";
 import CategoryList from "./Category/CategoryList";
 import CategoryForm from "./Category/CategoryForm";
-
 import TagList from "./Tags/TagList";
 import { TagForm } from "./Tags/TagForm";
 import UserDetail from "./Users/UserDetails";
@@ -17,9 +16,11 @@ import PostForm from "./Posts/PostForm";
 import PostDetails from "./Posts/PostDetails";
 import MyPosts from "./Posts/MyPosts";
 import CommentList from "./Comment/CommentList";
-
 import PostTagForm from "./Posts/PostTagForm";
 import PostEditForm from "./Posts/PostEditForm";
+import CommentForm from "./Comment/CommentForm";
+
+
 
 export default function ApplicationViews() {
   const { isLoggedIn } = useContext(UserProfileContext);
@@ -48,6 +49,9 @@ export default function ApplicationViews() {
 
         <Route path="/post/add" exact>
           {isLoggedIn ? <PostForm /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/comment/add/:postId(\d+)" >
+          {isLoggedIn ? <CommentForm /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/post" exact>

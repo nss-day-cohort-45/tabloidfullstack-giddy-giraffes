@@ -41,30 +41,29 @@ namespace Tabloid.Controllers
             }
             return Ok(comment);
         }
-
-
-        [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        [HttpPost("add/{postId}")]
+        public IActionResult Post(Comment comment)
         {
             var currentUserProfile = GetCurrentUserProfile();
-            try
-            {
-                _commentRepository.DeleteComment(id);
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
+
+            comment.UserProfileId = currentUserProfile.Id;
+            comment.CreateDateTime = DateTime.Now;
+            _commentRepository.Add(comment);
+            return CreatedAtAction("Get", new { id = comment.Id }, comment);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(Comment comment)
+        {
+  //          _commentRepository.Update(comment);
+            return NoContent();
+        }
 
+        // Retrieves the current user object by using the provided firebaseId
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
         }
-
-
     }
 }

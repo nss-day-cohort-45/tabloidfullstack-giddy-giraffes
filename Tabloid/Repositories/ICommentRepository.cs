@@ -10,5 +10,6 @@ namespace TabloidMVC.Repositories
         System.Collections.Generic.List<Comment> GetAllComments();
         Comment GetCommentById(int id);
         System.Collections.Generic.List<Comment> GetCommentByPostId(int postId);
+  //      void Update(Comment comment);
     }
 }

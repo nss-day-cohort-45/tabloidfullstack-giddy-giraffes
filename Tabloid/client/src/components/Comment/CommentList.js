@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CommentContext } from "../../providers/CommentProvider";
 import Comment from "./Comment";
 import { useParams } from "react-router-dom";
+import { Button } from "reactstrap"
 
 const CommentList = () => {
     const { comments, getAllComments } = useContext(CommentContext);
@@ -23,7 +24,21 @@ const CommentList = () => {
             {comments.map((c) => (
                 <Comment key={c.id} comment={c} />
             ))}
-        </section>
+
+
+            <Link to={`/comment/add/${id}`} className="nav-link">
+                <Button>
+                    <Button style={{
+                        color: "black",
+                    }}>
+                        <p>Add A Comment</p>
+                    </Button>
+
+                </Button>
+            </Link>
+
+
+        </section >
     );
 };
 

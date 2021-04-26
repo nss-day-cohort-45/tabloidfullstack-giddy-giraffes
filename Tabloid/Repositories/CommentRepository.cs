@@ -40,6 +40,7 @@ namespace TabloidMVC.Repositories
 
                         };
 
+
                         comments.Add(comment);
                     }
 
@@ -126,6 +127,7 @@ namespace TabloidMVC.Repositories
                     cmd.Parameters.AddWithValue("@PostId", comment.PostId);
 
                     comment.Id = (int)cmd.ExecuteScalar();
+                    
 
                 }
             }
