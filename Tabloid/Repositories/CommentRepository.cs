@@ -40,10 +40,7 @@ namespace TabloidMVC.Repositories
 
                         };
 
-<<<<<<< HEAD
 
-=======
->>>>>>> main
                         comments.Add(comment);
                     }
 
