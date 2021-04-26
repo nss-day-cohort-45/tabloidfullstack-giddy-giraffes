@@ -41,6 +41,22 @@ namespace Tabloid.Controllers
             }
             return Ok(comment);
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                _commentRepository.DeleteComment(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+
         [HttpPost("add/{postId}")]
         public IActionResult Post(Comment comment)
         {
