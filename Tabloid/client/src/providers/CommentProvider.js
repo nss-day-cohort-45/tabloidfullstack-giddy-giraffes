@@ -34,13 +34,13 @@ export const CommentProvider = (props) => {
                 },
                 body: JSON.stringify(comment), //this stringifies our comment object meaning it changes our object into string object
             })
+                .then((res) => {
+                    const response = res.json();
+                    return response;
+                }) //then send the stringified object(res), and we will use this in our PostForm after we add new object
+                .then((commentObject) => history.push(`/comment/${commentObject.id}`));
         });
-    };
-    //.then((res) => {
-    //   const response = res.json();
-    // return response;
-    //}) //then send the stringified object(res), and we will use this in our PostForm after we add new object
-    //.then((comment) => history.push(`/post/${postId}`));
+    };;
 
     return (
         <CommentContext.Provider value={{ comments, getAllComments, addComment }}>

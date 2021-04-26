@@ -41,7 +41,7 @@ namespace Tabloid.Controllers
             }
             return Ok(comment);
         }
-        [HttpPost]
+        [HttpPost("add/{52}")]
         public IActionResult Post(Comment comment)
         {
             var currentUserProfile = GetCurrentUserProfile();
