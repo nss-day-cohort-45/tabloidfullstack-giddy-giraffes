@@ -53,6 +53,13 @@ namespace Tabloid.Controllers
             return Ok(comment);
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(Comment comment)
+        {
+            _commentRepository.EditComment(comment);
+            return NoContent();
+        }
+
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
