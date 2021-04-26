@@ -3,16 +3,16 @@ import { PostContext } from "../../providers/PostProvider";
 import { TagContext } from "../../providers/TagProvider";
 import { useParams } from "react-router-dom";
 import OnePost from "./OnePost";
-import PostTag from "../PostTag";
+import PostTag from "./PostTag";
 import { Link } from "react-router-dom";
 
 const PostDetails = () => {
   const [post, setPost] = useState({
     userProfile: {},
   });
-  const [tags, setTag] = useState([]);
+
   const { getPostById } = useContext(PostContext);
-  const { GetTagsByPostId } = useContext(TagContext);
+  const { GetTagsByPostId, tagsOnPost } = useContext(TagContext);
   const { id } = useParams();
 
   useEffect(() => {
@@ -34,9 +34,8 @@ const PostDetails = () => {
   };
 
   useEffect(() => {
-    GetTagsByPostId(id).then((response) => {
-      setTag(response);
-    });
+    GetTagsByPostId(id);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -52,7 +51,7 @@ const PostDetails = () => {
           <OnePost post={post} />
         </div>
       </div>
-      {tags.map((t) => (
+      {tagsOnPost.map((t) => (
         <PostTag key={t.id} postTag={t} />
       ))}
     </div>

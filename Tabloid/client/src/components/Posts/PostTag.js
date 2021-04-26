@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import { Card, CardBody } from "reactstrap";
-import { TagContext } from "../providers/TagProvider";
-import { useHistory } from "react-router-dom";
 
 const PostTag = ({ postTag }) => {
   return (
