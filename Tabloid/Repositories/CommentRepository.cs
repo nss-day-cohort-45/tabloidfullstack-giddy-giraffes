@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using Tabloid.Models;
 using Tabloid.Repositories;
+using Tabloid.Utils;
 
 namespace TabloidMVC.Repositories
 {
@@ -131,29 +132,26 @@ namespace TabloidMVC.Repositories
             }
         }
 
-
-
-
         public void EditComment(Comment comment)
         {
-            using (SqlConnection conn = Connection)
+            using (var conn = Connection)
             {
                 conn.Open();
-
-                using (SqlCommand cmd = conn.CreateCommand())
+                using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                    UPDATE Comment
-                    SET Subject = @subject, Content = @content
-                    WHERE Id = @id
-                    ";
+                        UPDATE Comment
+                           SET Subject = @Subject, 
+                               Content = @Content,
+                               CreateDateTime = @CreateDateTime
+                         WHERE Id = @Id";
 
-                    cmd.Parameters.AddWithValue("@name", comment.Subject);
-                    cmd.Parameters.AddWithValue("@id", comment.Id);
-                    cmd.Parameters.AddWithValue("@content", comment.Content);
+                    DbUtils.AddParameter(cmd, "@Id", comment.Id);
+                    DbUtils.AddParameter(cmd, "@Subject", comment.Subject);
+                    DbUtils.AddParameter(cmd, "@Content", comment.Content);
+                    DbUtils.AddParameter(cmd, "@CreateDateTime", comment.CreateDateTime);
 
                     cmd.ExecuteNonQuery();
-
                 }
             }
         }

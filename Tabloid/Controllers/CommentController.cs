@@ -42,6 +42,17 @@ namespace Tabloid.Controllers
             return Ok(comment);
         }
 
+        [HttpGet("GetCommentById/{id}")]
+        public IActionResult GetCommentById(int id)
+        {
+            var comment = _commentRepository.GetCommentById(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            return Ok(comment);
+        }
+
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
