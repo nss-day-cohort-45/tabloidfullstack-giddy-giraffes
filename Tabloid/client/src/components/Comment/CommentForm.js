@@ -11,7 +11,7 @@ const CommentForm = () => {
     const { postId } = useParams();
 
     const [comment, setComment] = useState({
-        //      postId,
+        postId,
         subject: "",
         content: "",
     });
@@ -25,7 +25,7 @@ const CommentForm = () => {
 
     const handleClickSaveComment = () => {
         addComment({
-            //            postId: postId,
+            postId: postId,
             subject: comment.subject,
             content: comment.content
         })
