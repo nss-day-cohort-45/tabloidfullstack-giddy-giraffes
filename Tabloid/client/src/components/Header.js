@@ -16,6 +16,8 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
+  let currentUser = JSON.parse(sessionStorage.getItem("userProfile"));
+
   return (
     <div>
       <Navbar color="light" light expand="md">
@@ -97,7 +99,7 @@ export default function Header() {
                     style={{ cursor: "pointer" }}
                     onClick={logout}
                   >
-                    Logout
+                    Logout ({currentUser.fullName})
                   </a>
                 </NavItem>
 

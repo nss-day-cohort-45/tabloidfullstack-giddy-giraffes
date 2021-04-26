@@ -19,7 +19,7 @@ const MyPosts = () => {
         </Link> 
         <Row>
             {posts.map((p) => (
-                <Col border="primary" md="4"><Post key={p.id} post={p} /></Col>
+                <Col key={p.id} border="primary" md="4"><Post post={p} /></Col>
             ))}
         </Row>
     </Container>
