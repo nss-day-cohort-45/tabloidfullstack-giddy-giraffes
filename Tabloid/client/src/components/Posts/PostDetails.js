@@ -5,17 +5,16 @@ import { useParams } from "react-router-dom";
 import OnePost from "./OnePost";
 import { Link } from "react-router-dom";
 import { CardHeader } from "reactstrap";
-import PostTag from "../PostTag";
+import PostTag from "./PostTag";
 
 const PostDetails = () => {
   const [post, setPost] = useState({
     userProfile: {},
   });
-  const [tags, setTag] = useState([]);
-  const { getPostById } = useContext(PostContext);
-  const { GetTagsByPostId } = useContext(TagContext);
-  const { id } = useParams();
 
+  const { getPostById } = useContext(PostContext);
+  const { GetTagsByPostId, tagsOnPost } = useContext(TagContext);
+  const { id } = useParams();
 
   useEffect(() => {
     getPostById(id).then((response) => {
@@ -36,12 +35,10 @@ const PostDetails = () => {
   };
 
   useEffect(() => {
-    GetTagsByPostId(id).then((response) => {
-      setTag(response);
-    });
+    GetTagsByPostId(id);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   if (!post) {
     return null;
@@ -49,17 +46,17 @@ const PostDetails = () => {
 
   return (
     <div className="container">
-      <CardHeader><Link to={`/comment/getCommentByPostId/${id}`}>View Comments</Link></CardHeader>
-      <Link to={`/posttag/${id}`} className="nav-link">
-        Manage Tag
-      </Link>
+      <CardHeader>
+        <Link to={`/comment/getCommentByPostId/${id}`}>View Comments</Link>
+      </CardHeader>
+
       {manageTags(post)}
       <div className="row justify-content-center">
         <div className="col-sm-12 col-lg-6">
           <OnePost post={post} />
         </div>
       </div>
-      {tags.map((t) => (
+      {tagsOnPost.map((t) => (
         <PostTag key={t.id} postTag={t} />
       ))}
     </div>

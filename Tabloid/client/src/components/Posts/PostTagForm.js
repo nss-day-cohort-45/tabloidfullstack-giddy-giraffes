@@ -1,42 +1,49 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
-import { PostTagContext } from "../providers/PostTagProvider";
-import { TagContext } from "../providers/TagProvider";
-import OptionCard from "./OptionCard";
+import { PostTagContext } from "../../providers/PostTagProvider";
+import { TagContext } from "../../providers/TagProvider";
+
 import { useHistory, useParams } from "react-router-dom";
+import PostTagDelete from "./PostTagDelete";
 
 export const PostTagForm = () => {
   const { addPostTags } = useContext(PostTagContext);
-  const { getAllTags, tags, setTags } = useContext(TagContext);
+  const { getAllTags, tags, setTags, GetTagsByPostId, tagsOnPost } = useContext(
+    TagContext
+  );
+
   const [postTags, setPostTags] = useState("");
 
+  const [availableTags, setAvailableTags] = useState([]);
   const history = useHistory();
   const { postId } = useParams();
-  const handleControlledInputChange = (event) => {
-    // let selectedVal = event.target.value;
-    // let selectedVals = [...selectedVal.options].filter(
-    //   (option) => option.selectedVals
-    // );
-    // arrsetTags(selectedVals);
-    // let selected = [];
-    // for (let option of event.target.options) {
-    //   if (option.selected) {
-    //     selected.push(option.value);
-    //   }
-    // }
-    // arrsetTags(selected);
 
+  const handleControlledInputChange = (event) => {
     console.log(postId);
     const newPostTag = { ...postTags };
     newPostTag.tagId = postTags;
     newPostTag.postId = postId;
 
-    addPostTags(newPostTag).then(history.push(`/post/${postId}`));
+    addPostTags(newPostTag).then(() => {
+      history.go(0);
+    });
   };
 
   useEffect(() => {
-    getAllTags().then(setTags);
+    getAllTags();
   }, []);
+
+  useEffect(() => {
+    GetTagsByPostId(postId);
+  }, [tags]);
+
+  useEffect(() => {
+    const result = tags.filter(
+      ({ id: t }) => !tagsOnPost.some(({ id: tg }) => tg === t)
+    );
+
+    setAvailableTags(result);
+  }, [tagsOnPost]);
 
   return (
     <form className="postTagForm">
@@ -54,7 +61,7 @@ export const PostTagForm = () => {
           <Label for="postTag">Add a Tag </Label>
           <select id="postTag" onChange={(e) => setPostTags(e.target.value)}>
             <option value="0">Select a tag </option>
-            {tags.map((t) => (
+            {availableTags.map((t) => (
               <option key={t.id} value={t.id}>
                 {t.name}
               </option>
@@ -72,6 +79,12 @@ export const PostTagForm = () => {
         >
           Add Tags
         </Button>
+      </div>
+
+      <div>
+        {tagsOnPost.map((t) => (
+          <PostTagDelete key={t.id} postTag={t} />
+        ))}
       </div>
     </form>
   );
